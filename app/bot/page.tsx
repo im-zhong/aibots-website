@@ -2,9 +2,5 @@
 // zhangzhong
 
 export default function Page() {
-  return (
-    <>
-      <p>default user page</p>
-    </>
-  );
+  return <></>;
 }
