@@ -1,6 +1,5 @@
-// 2024/5/22
-// zhangzhong
+"use client";
 
 export default function Page() {
-  return <></>;
+  return <>Bot Dashboard</>;
 }
