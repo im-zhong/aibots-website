@@ -18,7 +18,12 @@ export interface UserCreate {
   password: string;
 }
 
-const API_URL = "http://localhost:8000";
+export interface Credentials {
+  access_token: string;
+  token_type: string;
+}
+
+const API_URL = "http://172.23.252.251:8000";
 
 export class AuthClient {
   // 登录成功之后，浏览器会保存一个cookie
@@ -26,8 +31,8 @@ export class AuthClient {
   // 所以方法需要返回一个bool值，和error
   // 这样调用方可以知道成功，失败的原因/
   // https://fastapi-users.github.io/fastapi-users/latest/usage/routes/#post-login
-  // https://fastapi-users.github.io/fastapi-users/latest/configuration/authentication/transports/cookie/#login
-  async login(username: string, password: string): Promise<string | undefined> {
+  // https://fastapi-users.github.io/fastapi-users/latest/configuration/authentication/transports/bearer/#login
+  async login(username: string, password: string): Promise<{ error?: string }> {
     try {
       // Handle login logic here
       // use fecthAPI to cal api
@@ -51,44 +56,71 @@ export class AuthClient {
           // scope: "read write", // adjust this according to your API's scope
         }),
         // ndicate that cookies should be sent with the request, even for cross-origin calls
-        credentials: "include",
+        // credentials: "include",
       });
 
-      // first check the response status code
-      if (response.status === 204) {
-        return undefined;
+      const data = await response.json();
+      switch (response.status) {
+        case 200:
+          // we should store the credentials in the local storage
+          // local storage can only store strings
+          // so we only store the token is ok
+          const credentials = data as Credentials;
+          localStorage.setItem("token", credentials.access_token);
+          return {};
+        case 400:
+          return { error: data.detail as string };
+        case 422:
+          return { error: "Validation Error" };
+        default:
+          return { error: String(response) };
       }
-      const json = await response.json();
-      console.log(json);
-      // get the detial error message
-      return json.detail as string;
+
+      // first check the response status code
+      // if (response.status === 200) {
+      //   console.log("login success");
+      //   // 这里就需要返回credentials了
+      //   return { credentials: (await response.json()) as Credentials };
+      // }
+      // const json = await response.json();
+      // console.log(json);
+      // // get the detial error message
+      // return json.detail as string;
     } catch (error) {
       console.error("Error:", error);
-      return String(error);
+      return { error: String(error) };
     }
   }
 
   // https://fastapi-users.github.io/fastapi-users/latest/usage/routes/#post-logout
-  // https://fastapi-users.github.io/fastapi-users/latest/configuration/authentication/transports/cookie/#logout
-  async logout(): Promise<string | undefined> {
+  // https://fastapi-users.github.io/fastapi-users/latest/configuration/authentication/transports/bearer/#logout
+  async logout(): Promise<{ error?: string }> {
     try {
+      const token = localStorage.getItem("token");
+      if (token === null) {
+        return { error: "No token" };
+      }
+      localStorage.removeItem("token");
+
       const response = await fetch(`${API_URL}/api/auth/logout`, {
         method: "POST",
-        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       });
+
       switch (response.status) {
         case 204:
-          return undefined;
+          return {};
         case 401:
-          return "Unauthorized";
+          return { error: "Unauthorized: Missing token or inactive user." };
         default:
-          return "Unknown error";
+          return { error: `Unknown error: ${String(response)}` };
       }
-      // const json = await response.json();
-      // return json.detail as string;
     } catch (error) {
       console.error("Error:", error);
-      return String(error);
+      return { error: String(error) };
     }
   }
 
@@ -231,17 +263,31 @@ export class AuthClient {
   // https://fastapi-users.github.io/fastapi-users/latest/usage/routes/#get-me
   async getUser(): Promise<{ user?: User; error?: string }> {
     try {
+      const token = localStorage.getItem("token");
+      if (token === null) {
+        return { error: "No token" };
+      }
+
       const response = await fetch(`${API_URL}/api/user/me`, {
         method: "GET",
-        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       });
+
+      const data = await response.json();
       switch (response.status) {
         case 200:
-          return { user: (await response.json()) as User };
+          return { user: data as User };
+        case 400:
+          return { error: data.detail as string };
         case 401:
           return { error: "Unauthorized" };
+        case 422:
+          return { error: "Validation Error" };
         default:
-          return { error: "Unknown error" };
+          return { error: `Unknown error: ${String(response)}` };
       }
     } catch (error) {
       console.error("Error:", error);

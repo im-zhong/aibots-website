@@ -23,10 +23,12 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
   // 只有当我们确实成功登录的时候，才可以渲染children
   // 所以这里也有一个state
   const [isAuthenticated, setIsAuthenticated] = React.useState<boolean>(false);
+  console.log("isAuthenticated", isAuthenticated);
 
   // 同时我们也需要在一开始就判断一下 是否成功认证了
   // 那显然也需要一个effect
   React.useEffect(() => {
+    console.log("in auth guard effect");
     // 首先，我们必须等待用户信息加载完毕，否则一切免谈
     if (isLoading) {
       return;

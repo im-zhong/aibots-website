@@ -38,7 +38,12 @@ export default function UserPopover() {
     // await authClient.logout();
     console.log("logout");
     // 登出之后还需要刷新router才行
-    await authClient.logout();
+    const { error } = await authClient.logout();
+    console.log("error", error);
+    if (error) {
+      alert(error);
+      return;
+    }
     // 还需要重置usercontext
     // 否则登录会出现问题
     // 就重置成最初始状态
@@ -46,8 +51,8 @@ export default function UserPopover() {
     // 不行，所以我们必须要提供一个函数
     // 用来重置状态
     resetUserContext?.();
+    router.refresh();
     router.replace(path.auth.login);
-    // router.refresh();
   };
 
   const open = Boolean(anchorEl);
