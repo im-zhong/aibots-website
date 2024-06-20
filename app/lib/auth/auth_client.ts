@@ -93,7 +93,7 @@ export class AuthClient {
   }
 
   // https://fastapi-users.github.io/fastapi-users/latest/usage/routes/#post-register
-  async register(userCreate: UserCreate): Promise<User | string> {
+  async register(userCreate: UserCreate): Promise<{ error?: string }> {
     try {
       const response = await fetch(`${API_URL}/api/auth/register`, {
         method: "POST",
@@ -105,17 +105,18 @@ export class AuthClient {
       });
       switch (response.status) {
         case 200:
-          return (await response.json()) as User;
+          // return (await response.json()) as User;
+          return {};
         case 422:
-          return "Validation Error";
+          return { error: "Validation Error" };
         case 400:
-          return "Bad Request";
+          return { error: "Bad Request" };
         default:
-          return "Unknown error";
+          return { error: "Unknown error" };
       }
     } catch (error) {
       console.error("Error:", error);
-      return String(error);
+      return { error: String(error) };
     }
   }
 
@@ -170,7 +171,7 @@ export class AuthClient {
   }
 
   // https://fastapi-users.github.io/fastapi-users/latest/usage/routes/#post-request-verify-token
-  async requestVerifyToken(email: string) {
+  async requestVerifyToken({ email }: { email: string }) {
     try {
       const response = await fetch(`${API_URL}/api/auth/request-verify-token`, {
         method: "POST",
@@ -193,7 +194,7 @@ export class AuthClient {
   }
 
   // https://fastapi-users.github.io/fastapi-users/latest/usage/routes/#post-verify
-  async verify(token: string) {
+  async verify({ token }: { token: string }): Promise<{ error?: string }> {
     try {
       const response = await fetch(`${API_URL}/api/auth/verify`, {
         method: "POST",
@@ -203,15 +204,23 @@ export class AuthClient {
         body: JSON.stringify({ token: token }),
         credentials: "include",
       });
+      // console.log(await response.json());
+      // 如果用户已经verify了，应该返回成功啊
       switch (response.status) {
         case 200:
-          return undefined;
+          return {};
+        case 400:
+          const { detail } = await response.json();
+          if (detail === "VERIFY_USER_ALREADY_VERIFIED") {
+            return {};
+          }
+          return { error: detail };
         default:
-          return "Unknown error";
+          return { error: "Unknown error" };
       }
     } catch (error) {
       console.error("Error:", error);
-      return String(error);
+      return { error: String(error) };
     }
   }
 
@@ -236,3 +245,5 @@ export class AuthClient {
     }
   }
 }
+
+export const authClient = new AuthClient();
