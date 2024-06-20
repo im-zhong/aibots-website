@@ -9,7 +9,15 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
   // use router
   const router = useRouter();
   // use contect
+  // 应该是登出的时候没有重置UserContext的状态导致的bug
+  // 在最开始的时候 isLoading 为 true
+  // user和error应该都是null才对
   const { user, error, isLoading } = React.useContext(UserContext);
+  console.log("user", user);
+  console.log("error", error);
+  console.log("isLoading", isLoading);
+
+  console.log("in auth guard");
 
   // auth guard使用的是条件渲染
   // 只有当我们确实成功登录的时候，才可以渲染children
@@ -30,6 +38,7 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
       // 所以我们也要跳转到登录页面
       // 感觉这个点特别容易漏啊
       setIsAuthenticated(false);
+      console.log("error", error);
       // 如果有错误，我们就跳转到登录页面
       router.push("/auth/login");
       return;

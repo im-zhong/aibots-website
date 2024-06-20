@@ -1,3 +1,6 @@
+// 2024/6/20
+// zhangzhong
+
 "use client";
 
 import * as React from "react";
@@ -15,13 +18,14 @@ import MailIcon from "@mui/icons-material/Mail";
 import Link from "next/link";
 import AuthGuard from "@/app/ui/auth/auth-guard";
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function SideNav() {
   const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
   };
 
+  // https://mui.com/material-ui/react-drawer/
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
       <List>
@@ -40,7 +44,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <ListItemButton>
             <ListItemIcon>{<InboxIcon />}</ListItemIcon>
             <ListItemText>
-              <Link href="/bot/chat">Chat</Link>
+              <Link href="/agent/chat">Chat</Link>
             </ListItemText>
           </ListItemButton>
         </ListItem>
@@ -49,7 +53,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <ListItemButton>
             <ListItemIcon>{<InboxIcon />}</ListItemIcon>
             <ListItemText>
-              <Link href="/bot/create">Create Bot</Link>
+              <Link href="/agent/create">Create Bot</Link>
             </ListItemText>
           </ListItemButton>
         </ListItem>
@@ -70,24 +74,16 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     </Box>
   );
 
+  // 需要在这里添加一个个人信息的按钮
+  // 这样我就可以登出了
   return (
-    <AuthGuard>
-      <Box
-        sx={{
-          display: "grid",
-          gridTemplateColumns: "1fr 3fr",
-        }}
-      >
-        <Drawer
-          anchor="left"
-          variant="permanent"
-          open={open}
-          // onClose={toggleDrawer(false)}
-        >
-          {DrawerList}
-        </Drawer>
-        <div>{children}</div>
-      </Box>
-    </AuthGuard>
+    <Drawer
+      anchor="left"
+      variant="permanent"
+      open={open}
+      // onClose={toggleDrawer(false)}
+    >
+      {DrawerList}
+    </Drawer>
   );
 }

@@ -30,7 +30,7 @@ class Knowledge {
 
 // 封装一下后端的API调用
 async function createBot(data: CreateBotFormData, knowledges: Knowledge[]) {
-  const response = await fetch("http://localhost:8000/api/bot/create", {
+  const response = await fetch("http://localhost:8000/api/agent/create", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -45,10 +45,13 @@ async function createBot(data: CreateBotFormData, knowledges: Knowledge[]) {
 }
 
 async function uploadFile(file: File) {
-  const response = await fetch("http://localhost:8000/api/knowledge/upload", {
-    method: "POST",
-    body: file,
-  });
+  const response = await fetch(
+    "http://localhost:8000/api/knowledge/upload-file",
+    {
+      method: "POST",
+      body: file,
+    }
+  );
 }
 
 // https://react-dropzone.js.org/
@@ -71,7 +74,7 @@ function Basic({
         const formData = new FormData();
         formData.append("file", file);
 
-        fetch("http://localhost:8000/api/knowledge/upload", {
+        fetch("http://localhost:8000/api/knowledge/upload-file", {
           method: "POST",
           body: formData,
         })

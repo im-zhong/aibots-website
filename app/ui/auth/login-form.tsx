@@ -21,7 +21,9 @@ export default function LoginForm() {
   const onSubmit = async (data: LoginFormData) => {
     console.log(data);
     await authClient.login(data.username, data.password);
-    router.push("/bot");
+    console.log("login done!!!");
+    router.push("/agent");
+    console.log("redirect to agent page");
   };
 
   return (

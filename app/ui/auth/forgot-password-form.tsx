@@ -13,14 +13,21 @@ interface ForgotPasswordFormData {
   email: string;
 }
 
-export default function LoginForm() {
+// 输入忘记密码之后应该干什么？
+// 应该等待后端发送邮件地址
+// 点击链接会进入一个重置密码的界面，只需要填入新密码并重复一次就ok啦
+// 所以我们还需要提供一个界面，reset-password-form!
+export default function ForgotPasswordForm() {
   const { handleSubmit, control } = useForm<ForgotPasswordFormData>();
   const router = useRouter();
+  // 这里和登录一样
+  // TODO
+  // 应该弹出一个提示 提醒用户查看邮箱
 
   const onSubmit = async (data: ForgotPasswordFormData) => {
     console.log(data);
     await authClient.forgotPassword({ email: data.email });
-    router.push("/bot");
+    // router.push("/agent");
   };
 
   return (

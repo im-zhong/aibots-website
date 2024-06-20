@@ -30,7 +30,8 @@ export default function Page() {
         Already have an account? <Link href="/auth/login">login</Link> it.
       </Typography>
       <Typography variant="subtitle1" sx={{ mb: 2 }}>
-        Forget your password? <Link href="/auth/reset-password">reset</Link> it.
+        Forget your password? <Link href="/auth/forgot-password">reset</Link>{" "}
+        it.
       </Typography>
     </Box>
   );

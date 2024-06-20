@@ -10,6 +10,7 @@ export interface UserContextValue {
   user: User | null;
   error: string | null;
   isLoading: boolean;
+  resetUserContext?: () => void;
 }
 
 export const UserContext = React.createContext<UserContextValue>({
@@ -30,10 +31,21 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
     isLoading: true,
   });
 
+  console.log("in user provider");
+  console.log("user", user);
+  console.log("error", user.error);
+  console.log("isLoading", user.isLoading);
+
+  const resetUserContext = () => {
+    setUser({ user: null, error: null, isLoading: true });
+  };
+
   // 同时这个组件一旦mount，我们立刻调用auth client
   // 所以需要一个effect
   // Effect callbacks are synchronous to prevent race conditions
   React.useEffect(() => {
+    // 我怎么感觉这个effect没有执行呢？
+    console.log("run user provider effect");
     const authClient = new AuthClient();
     authClient
       .getUser()
@@ -54,12 +66,16 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
       .catch((error) => {
         setUser({ user: null, error: error, isLoading: false });
       });
+
+    console.log("get user");
   }, []);
 
   return (
     // 这里有一个错误啊
     // 我们这里的state变化之后，当然要通过我们的value传递下去
     // 所以这里传递的其实就是我们自己的state呀
-    <UserContext.Provider value={{ ...user }}>{children}</UserContext.Provider>
+    <UserContext.Provider value={{ ...user, resetUserContext }}>
+      {children}
+    </UserContext.Provider>
   );
 }

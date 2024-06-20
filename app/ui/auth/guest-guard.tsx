@@ -42,7 +42,7 @@ export default function GuestGuard({
       // 感觉这个点特别容易漏啊
       setIsAuthenticated(true);
       // 如果有错误，我们就跳转到登录页面
-      router.replace("/bot");
+      router.replace("/agent");
       return;
     }
 
