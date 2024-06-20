@@ -121,7 +121,11 @@ export class AuthClient {
   }
 
   // https://fastapi-users.github.io/fastapi-users/latest/usage/routes/#post-forgot-password
-  async forgotPassword(email: string): Promise<string | undefined> {
+  async forgotPassword({
+    email,
+  }: {
+    email: string;
+  }): Promise<{ error?: string }> {
     try {
       const response = await fetch(`${API_URL}/api/auth/forgot-password`, {
         method: "POST",
@@ -133,13 +137,13 @@ export class AuthClient {
       });
       switch (response.status) {
         case 204:
-          return undefined;
+          return {};
         default:
-          return "Unknown error";
+          return { error: "Unknown error" };
       }
     } catch (error) {
       console.error("Error:", error);
-      return String(error);
+      return { error: String(error) };
     }
   }
 
