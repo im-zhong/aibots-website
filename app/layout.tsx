@@ -3,6 +3,7 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import theme from "@/app/ui/theme";
+import { UserProvider } from "@/app/ui/auth/user-provider";
 // import "@/app/ui/global.css";
 
 export default function RootLayout(props: { children: React.ReactNode }) {
@@ -10,11 +11,13 @@ export default function RootLayout(props: { children: React.ReactNode }) {
     <html lang="en">
       <body>
         <AppRouterCacheProvider options={{ enableCssLayer: true }}>
-          <ThemeProvider theme={theme}>
-            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-            <CssBaseline />
-            {props.children}
-          </ThemeProvider>
+          <UserProvider>
+            <ThemeProvider theme={theme}>
+              {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+              <CssBaseline />
+              {props.children}
+            </ThemeProvider>
+          </UserProvider>
         </AppRouterCacheProvider>
       </body>
     </html>

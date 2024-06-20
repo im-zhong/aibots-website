@@ -13,6 +13,7 @@ import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import Link from "next/link";
+import AuthGuard from "@/app/ui/auth/auth-guard";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = React.useState(false);
@@ -70,21 +71,23 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   );
 
   return (
-    <Box
-      sx={{
-        display: "grid",
-        gridTemplateColumns: "1fr 3fr",
-      }}
-    >
-      <Drawer
-        anchor="left"
-        variant="permanent"
-        open={open}
-        // onClose={toggleDrawer(false)}
+    <AuthGuard>
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: "1fr 3fr",
+        }}
       >
-        {DrawerList}
-      </Drawer>
-      <div>{children}</div>
-    </Box>
+        <Drawer
+          anchor="left"
+          variant="permanent"
+          open={open}
+          // onClose={toggleDrawer(false)}
+        >
+          {DrawerList}
+        </Drawer>
+        <div>{children}</div>
+      </Box>
+    </AuthGuard>
   );
 }

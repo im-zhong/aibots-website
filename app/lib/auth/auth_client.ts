@@ -4,6 +4,7 @@
 
 // 在这里定义User的类型
 
+// TODO: 拿到user的信息之后可以保存在localStorage里面，这样后续就不用一只请求API拿数据了
 export interface User {
   id: string;
   email: string;
@@ -215,7 +216,7 @@ export class AuthClient {
   }
 
   // https://fastapi-users.github.io/fastapi-users/latest/usage/routes/#get-me
-  async getUser(): Promise<User | string> {
+  async getUser(): Promise<{ user?: User; error?: string }> {
     try {
       const response = await fetch(`${API_URL}/api/user/me`, {
         method: "GET",
@@ -223,15 +224,15 @@ export class AuthClient {
       });
       switch (response.status) {
         case 200:
-          return (await response.json()) as User;
+          return { user: (await response.json()) as User };
         case 401:
-          return "Unauthorized";
+          return { error: "Unauthorized" };
         default:
-          return "Unknown error";
+          return { error: "Unknown error" };
       }
     } catch (error) {
       console.error("Error:", error);
-      return String(error);
+      return { error: String(error) };
     }
   }
 }
