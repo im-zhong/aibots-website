@@ -191,10 +191,13 @@ export class AuthClient {
   }
 
   // https://fastapi-users.github.io/fastapi-users/latest/usage/routes/#post-reset-password
-  async resetPassword(
-    token: string,
-    password: string
-  ): Promise<{ error?: string }> {
+  async resetPassword({
+    token,
+    password,
+  }: {
+    token: string;
+    password: string;
+  }): Promise<{ error?: string }> {
     try {
       const response = await fetch(api.auth.resetPassword.url, {
         method: api.auth.resetPassword.method,
