@@ -1,5 +1,6 @@
 // 我感觉我需要像path那样给api也整一个const
 
+import { create } from "domain";
 import { url } from "inspector";
 
 // 因为还是挺多地方使用到了
@@ -49,22 +50,11 @@ export const api = {
       url: `${API_URL}/user/me`,
     },
   },
-  //   agent: {
-  //     me: `${API_URL}/agent/me`,
-  //     login: `${API_URL}/agent/login`,
-  //     register: `${API_URL}/agent/register`,
-  //     verify: `${API_URL}/agent/verify`,
-  //     forgotPassword: `${API_URL}/agent/forgot-password`,
-  //     resetPassword: `${API_URL}/agent/reset-password`,
-  //   },
-  //   chat: {
-  //     create: `${API_URL}/chat/create`,
-  //     list: `${API_URL}/chat/list`,
-  //     messages: `${API_URL}/chat/messages`,
-  //     send: `${API_URL}/chat/send`,
-  //   },
-  //   message: {
-  //     create: `${API_URL}/message/create`,
-  //     list: `${API_URL}/message/list`,
-  //   },
+
+  agent: {
+    create: {
+      method: "POST",
+      url: `${API_URL}/agent/create`,
+    },
+  },
 };
