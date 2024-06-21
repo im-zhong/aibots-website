@@ -40,6 +40,7 @@ export default function UserPopover() {
     // 登出之后还需要刷新router才行
     const { error } = await authClient.logout();
     console.log("error", error);
+    // 没必要 登出没必要判断是否失败 否则token失效了就没法登出了？？？
     if (error) {
       alert(error);
       return;
