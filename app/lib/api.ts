@@ -57,4 +57,19 @@ export const api = {
       url: `${API_URL}/agent/create`,
     },
   },
+
+  knowledge: {
+    createTopic: {
+      method: "POST",
+      url: `${API_URL}/knowledge/create`,
+    },
+    uploadFile: {
+      method: "POST",
+      url: `${API_URL}/knowledge/upload-file`,
+    },
+    uploadUrl: {
+      method: "POST",
+      url: `${API_URL}/knowledge/upload-url`,
+    },
+  },
 };

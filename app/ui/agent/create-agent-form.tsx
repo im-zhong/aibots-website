@@ -16,6 +16,8 @@ import { authClient } from "@/app/lib/auth/auth_client";
 import FormControlLabel from "@mui/material/FormControlLabel";
 
 import Switch from "@mui/material/Switch";
+import { KnowledgeForm } from "@/app/ui/agent/knowledge";
+import Paper from "@mui/material/Paper";
 
 class Knowledge {
   filename: string;
@@ -57,106 +59,107 @@ export function CreateAgentForm() {
 
   const label = { inputProps: { "aria-label": "Switch demo" } };
   return (
-    <Box
-      component={"form"}
-      onSubmit={handleSubmit(onSubmit)}
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        gap: 2,
-      }}
-    >
-      <Typography variant="h3" gutterBottom>
-        Agent Infomation
-      </Typography>
-      <Controller
-        name="name"
-        control={control}
-        defaultValue=""
-        render={({ field }) => (
-          <TextField label="Name" variant="outlined" {...field} />
-        )}
-      ></Controller>
+    <>
+      <Box
+        component={"form"}
+        onSubmit={handleSubmit(onSubmit)}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 2,
+        }}
+      >
+        <Typography variant="h3" gutterBottom>
+          Agent Infomation
+        </Typography>
+        <Controller
+          name="name"
+          control={control}
+          defaultValue=""
+          render={({ field }) => (
+            <TextField label="Name" variant="outlined" {...field} />
+          )}
+        ></Controller>
 
-      <Controller
-        name="description"
-        control={control}
-        defaultValue=""
-        render={({ field }) => (
-          <TextField label="Description" variant="outlined" {...field} />
-        )}
-      ></Controller>
+        <Controller
+          name="description"
+          control={control}
+          defaultValue=""
+          render={({ field }) => (
+            <TextField label="Description" variant="outlined" {...field} />
+          )}
+        ></Controller>
 
-      <Controller
-        name="prompt"
-        control={control}
-        defaultValue=""
-        render={({ field }) => (
-          <TextField label="Prompt" variant="outlined" {...field} />
-        )}
-      ></Controller>
+        <Controller
+          name="prompt"
+          control={control}
+          defaultValue=""
+          render={({ field }) => (
+            <TextField label="Prompt" variant="outlined" {...field} />
+          )}
+        ></Controller>
 
-      <Divider />
-      <Typography variant="h3" gutterBottom>
-        Is Your could seen by others?
-      </Typography>
-      <Controller
-        name="is_shared"
-        control={control}
-        defaultValue={true}
-        render={({ field }) => (
-          <FormControlLabel
-            control={<Switch defaultChecked />}
-            label="is shared?"
-            {...field}
-          />
-        )}
-      ></Controller>
+        <Divider />
+        <Typography variant="h3" gutterBottom>
+          Is Your could seen by others?
+        </Typography>
+        <Controller
+          name="is_shared"
+          control={control}
+          defaultValue={true}
+          render={({ field }) => (
+            <FormControlLabel
+              control={<Switch defaultChecked />}
+              label="is shared?"
+              {...field}
+            />
+          )}
+        ></Controller>
 
-      <Divider />
-      <Typography variant="h3" gutterBottom>
-        Give your Agent Capabilities!
-      </Typography>
-      <Controller
-        name="web_search"
-        control={control}
-        defaultValue={true}
-        render={({ field }) => (
-          <FormControlLabel
-            control={<Switch defaultChecked />}
-            label="web search"
-            {...field}
-          />
-        )}
-      ></Controller>
-      <Controller
-        name="painting"
-        control={control}
-        defaultValue={true}
-        render={({ field }) => (
-          <FormControlLabel
-            control={<Switch defaultChecked />}
-            label="painting"
-            {...field}
-          />
-        )}
-      ></Controller>
+        <Divider />
+        <Typography variant="h3" gutterBottom>
+          Give your Agent Capabilities!
+        </Typography>
+        <Controller
+          name="web_search"
+          control={control}
+          defaultValue={true}
+          render={({ field }) => (
+            <FormControlLabel
+              control={<Switch defaultChecked />}
+              label="web search"
+              {...field}
+            />
+          )}
+        ></Controller>
+        <Controller
+          name="painting"
+          control={control}
+          defaultValue={true}
+          render={({ field }) => (
+            <FormControlLabel
+              control={<Switch defaultChecked />}
+              label="painting"
+              {...field}
+            />
+          )}
+        ></Controller>
 
-      <Controller
-        name="multi_model"
-        control={control}
-        defaultValue={true}
-        render={({ field }) => (
-          <FormControlLabel
-            control={<Switch defaultChecked />}
-            label="multi model"
-            {...field}
-          />
-        )}
-      ></Controller>
+        <Controller
+          name="multi_model"
+          control={control}
+          defaultValue={true}
+          render={({ field }) => (
+            <FormControlLabel
+              control={<Switch defaultChecked />}
+              label="multi model"
+              {...field}
+            />
+          )}
+        ></Controller>
 
-      {/* <Controller
+        {/* <Controller
           name="knowledges"
           control={control}
           defaultValue={[]}
@@ -165,20 +168,23 @@ export function CreateAgentForm() {
           )}
         ></Controller> */}
 
-      {
-        // 这里需要加入knowledge state
-        // 显然我可以写成一个hook
-        // 这个部分和form分开
-        // 因为knowledge是可以动态增加的，但是表格的filed是固定的
-        // 而且knowledge实现起来肯定是需要state的 用form也不好实现
-        // 不如作为一个独立的参数 到时候传给api就ok拉
-        // 或者拿到数据再组织成 AgentCreate inteface也行
-        // const knowledges = useKnowledges();
-      }
+        {
+          // 这里需要加入knowledge state
+          // 显然我可以写成一个hook
+          // 这个部分和form分开
+          // 因为knowledge是可以动态增加的，但是表格的filed是固定的
+          // 而且knowledge实现起来肯定是需要state的 用form也不好实现
+          // 不如作为一个独立的参数 到时候传给api就ok拉
+          // 或者拿到数据再组织成 AgentCreate inteface也行
+          // const knowledges = useKnowledges();
+        }
 
-      <Button variant="contained" type="submit">
-        Create
-      </Button>
-    </Box>
+        <Button variant="contained" type="submit">
+          Create
+        </Button>
+      </Box>
+
+      <KnowledgeForm />
+    </>
   );
 }
