@@ -133,15 +133,14 @@ export function KnowledgeForm({
     // 为什么创建知识的时候就要绑定一个agent呢？
     // 现在调用这个API会出错 所以暂时先不调用
     // 随机生成一个id
-    // const { id, error } = await knowledgeClient.createTopic({
-    //   topic: topic,
-    // });
+    const { id, error } = await knowledgeClient.createTopic({
+      topic: topic,
+    });
 
     // if (error) {
     //   console.log(error);
     //   return;
     // }
-    const id = uuidv4();
     console.log(id);
 
     setTopics((prev) => [...prev, { topic: topic, knowledgeId: id as string }]);

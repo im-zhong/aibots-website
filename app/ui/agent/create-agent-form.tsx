@@ -19,6 +19,8 @@ import Switch from "@mui/material/Switch";
 import { KnowledgeForm } from "@/app/ui/agent/knowledge";
 import Paper from "@mui/material/Paper";
 import { UserContext } from "@/app/ui/auth/user-provider";
+import { Router } from "next/router";
+import { path } from "@/app/lib/path";
 
 class Knowledge {
   filename: string;
@@ -47,6 +49,7 @@ interface CreateAgentFormData {
 // 在nextjs app里面的export default是框架需要 它可以直接引用到他们组件 我们不用自己写
 // 但是自己的组件库 不应该export defaut 因为不default的语法不一致 这就是最严重的一点
 export function CreateAgentForm() {
+  const router = useRouter();
   const { handleSubmit, control } = useForm<CreateAgentFormData>();
   const [topics, setTopics] = React.useState<
     { topic: string; knowledgeId: string }[]
@@ -91,19 +94,27 @@ export function CreateAgentForm() {
     // 先用第一种把功能验证完毕
     // 第一种写完之后再写第二种其实也很简单，因为组件都是复用的
     // rename the variable, destructuring must have this feature!
-    if (topics.length === 0) {
-      // console.error("Error: no knowledges");
-      console.log("no knowledges");
-      return;
+    // if (topics.length === 0) {
+    //   // console.error("Error: no knowledges");
+    //   console.log("no knowledges");
+    //   return;
+    // }
+    if (topics.length > 0) {
+      const { error: addKnowledgesError } = await agentClient.addKnowledges({
+        agent_id: agent.id,
+        knowledge_ids: topics.map((topic) => topic.knowledgeId),
+      });
+      if (addKnowledgesError) {
+        console.error("Error:", addKnowledgesError);
+        return;
+      }
     }
-    const { error: addKnowledgesError } = await agentClient.addKnowledges({
-      agent_id: agent.id,
-      knowledge_ids: topics.map((topic) => topic.knowledgeId),
-    });
-    if (addKnowledgesError) {
-      console.error("Error:", addKnowledgesError);
-      return;
-    }
+
+    // 如果创建成功了
+    // 一定要把所有的state都清空
+    // 然后跳转到主页
+    setTopics([]);
+    router.push(path.agent.home);
   };
 
   // 跟knowledge相关的state显然需要在这里创建
