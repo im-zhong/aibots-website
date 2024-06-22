@@ -2,7 +2,7 @@
 // zhangzhong
 
 import { api } from "@/app/lib/api";
-import { v4 as uuidv4 } from "uuid";
+import { getToken } from "@/app/lib/common/token";
 
 export class KnowledgeClient {
   async createTopic({
@@ -15,6 +15,7 @@ export class KnowledgeClient {
         method: api.knowledge.createTopic.method,
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${getToken()}`,
         },
         body: JSON.stringify({
           topic: topic,
@@ -49,6 +50,9 @@ export class KnowledgeClient {
       formData.append("knowledge_id", knowledge_id);
       const response = await fetch(api.knowledge.uploadFile.url, {
         method: api.knowledge.uploadFile.method,
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
         body: formData,
       });
 
@@ -79,6 +83,7 @@ export class KnowledgeClient {
         method: api.knowledge.uploadUrl.method,
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${getToken()}`,
         },
         body: JSON.stringify({
           knowledge_id: knowledge_id,

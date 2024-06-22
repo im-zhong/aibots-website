@@ -5,6 +5,7 @@
 // 在这里定义User的类型
 
 import { api } from "@/app/lib/api";
+import { getToken } from "@/app/lib/common/token";
 
 // TODO: 拿到user的信息之后可以保存在localStorage里面，这样后续就不用一只请求API拿数据了
 export interface User {
@@ -23,15 +24,6 @@ export interface UserCreate {
 export interface Credentials {
   access_token: string;
   token_type: string;
-}
-
-// get token or throw
-function getToken() {
-  const token = localStorage.getItem("token");
-  if (token === null) {
-    throw new Error("No token");
-  }
-  return token;
 }
 
 export class AuthClient {

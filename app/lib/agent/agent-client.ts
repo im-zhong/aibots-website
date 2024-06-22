@@ -2,6 +2,7 @@
 // zhangzhong
 
 import { api } from "@/app/lib/api";
+import { getToken } from "@/app/lib/common/token";
 
 // https://www.startups.com/community/questions/561/should-our-photo-sharing-app-use-base64-strings-or-files-using-urls-to-display
 export interface Agent {
@@ -34,6 +35,7 @@ class AgentClient {
         method: api.agent.create.method,
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${getToken()}`,
         },
         body: JSON.stringify({
           ...agentCreate,
@@ -67,6 +69,7 @@ class AgentClient {
         method: api.agent.addKnowledges.method,
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${getToken()}`,
         },
         body: JSON.stringify({
           agent_id,
