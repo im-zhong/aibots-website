@@ -89,6 +89,38 @@ class AgentClient {
       return { error: String(error) };
     }
   }
+
+  async listAgents({
+    limit,
+  }: {
+    limit: number;
+  }): Promise<{ agents: Agent[]; error?: string }> {
+    try {
+      // Create the query string
+      const queryString = `limit=${encodeURIComponent(limit)}`;
+      // Append the query string to the base URL
+      const urlWithParams = `${api.agent.listAgents.url}?${queryString}`;
+
+      const response = await fetch(urlWithParams, {
+        method: api.agent.listAgents.method,
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      });
+
+      const data = await response.json();
+      switch (response.status) {
+        case 200:
+          return { agents: data as Agent[] };
+        case 422:
+          return { agents: [], error: "Validation Error" };
+        default:
+          return { agents: [], error: "Unknown error" };
+      }
+    } catch (error) {
+      return { agents: [], error: String(error) };
+    }
+  }
 }
 
 export const agentClient = new AgentClient();

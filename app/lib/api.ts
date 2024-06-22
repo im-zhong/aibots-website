@@ -61,6 +61,10 @@ export const api = {
       method: "POST",
       url: `${API_URL}/agent/add-knowledges`,
     },
+    listAgents: {
+      method: "GET",
+      url: `${API_URL}/agent/list`,
+    },
   },
 
   knowledge: {

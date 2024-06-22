@@ -8,6 +8,7 @@ import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 import { Divider } from "@mui/material";
+import { Agent } from "@/app/lib/agent/agent-client";
 
 const bull = (
   <Box
@@ -18,18 +19,18 @@ const bull = (
   </Box>
 );
 
-export default function AgentCard() {
+export default function AgentCard({ agent }: { agent: Agent }) {
   return (
     <Card sx={{ minWidth: 275 }}>
       <CardContent>
-        <Avatar>A</Avatar>
+        <Avatar>Agent</Avatar>
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          Agent Name
+          Agent Name: {agent.name}
         </Typography>
         <Divider />
         <Typography variant="body2">
           A long long long long long long long long long long long long long
-          long agent description
+          long agent description: {agent.description}
         </Typography>
       </CardContent>
       <CardActions>
