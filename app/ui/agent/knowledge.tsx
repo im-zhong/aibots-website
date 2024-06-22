@@ -89,11 +89,26 @@ interface KnowledgeTopic {
 // 而且说实话也挺合理的
 // 因为我们添加了一个知识topic 就需要重绘一次
 // 否则我们怎么将数据传递上去呢 只有这一种方式啊
-export function KnowledgeForm() {
+// TODO
+export function KnowledgeForm({
+  topics,
+  setTopics,
+}: {
+  topics: {
+    topic: string;
+    knowledgeId: string;
+  }[];
+  setTopics: React.Dispatch<
+    React.SetStateAction<
+      {
+        topic: string;
+        knowledgeId: string;
+      }[]
+    >
+  >;
+}) {
   const { handleSubmit, control } = useForm<{ topic: string }>();
-  const [topics, setTopics] = React.useState<
-    { topic: string; knowledgeId: string }[]
-  >([]);
+
   // 首先是一个小的form
   // 就一个输入框 一个按钮
   // 输入框是topic 按钮先发送api 然后setState

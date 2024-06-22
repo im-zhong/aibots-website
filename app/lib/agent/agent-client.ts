@@ -17,7 +17,6 @@ export interface AgentCreate {
   name: string;
   description: string;
   is_shared: boolean;
-  knowledges: string[];
   prompt: string;
   web_search: boolean;
   painting: boolean;
@@ -46,6 +45,38 @@ class AgentClient {
       switch (response.status) {
         case 200:
           return { agent: data as Agent };
+        case 422:
+          return { error: "Validation Error" };
+        default:
+          return { error: "Unknown error" };
+      }
+    } catch (error) {
+      return { error: String(error) };
+    }
+  }
+
+  async addKnowledges({
+    agent_id,
+    knowledge_ids,
+  }: {
+    agent_id: string;
+    knowledge_ids: string[];
+  }): Promise<{ error?: string }> {
+    try {
+      const response = await fetch(api.agent.addKnowledges.url, {
+        method: api.agent.addKnowledges.method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          agent_id,
+          knowledge_ids,
+        }),
+      });
+
+      switch (response.status) {
+        case 200:
+          return {};
         case 422:
           return { error: "Validation Error" };
         default:

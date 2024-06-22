@@ -18,6 +18,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import { KnowledgeForm } from "@/app/ui/agent/knowledge";
 import Paper from "@mui/material/Paper";
+import { UserContext } from "@/app/ui/auth/user-provider";
 
 class Knowledge {
   filename: string;
@@ -47,10 +48,62 @@ interface CreateAgentFormData {
 // 但是自己的组件库 不应该export defaut 因为不default的语法不一致 这就是最严重的一点
 export function CreateAgentForm() {
   const { handleSubmit, control } = useForm<CreateAgentFormData>();
+  const [topics, setTopics] = React.useState<
+    { topic: string; knowledgeId: string }[]
+  >([]);
+
+  // TODO
+  // 我们还要使用user
+  // 要不还是写一个钩子吧
+  // 确认user不是空的
+  const { user } = React.useContext(UserContext);
+  if (user === null) {
+    return <div>loading</div>;
+  }
 
   const onSubmit = async (data: CreateAgentFormData) => {
     console.log(data);
     // const { agent, error } = await agentClient.createAgent({ ...data });
+    const { agent, error } = await agentClient.createAgent({
+      ...data,
+      user_id: user.id,
+    });
+    if (error) {
+      console.error("Error:", error);
+      return;
+    }
+    if (!agent) {
+      console.error("Error: agent is null");
+      return;
+    }
+
+    console.log(agent);
+
+    // TODO
+    // 然后我们需要创建add knowledges
+    // 但是knowledges要从那里来呢？
+    // 现在有两个方案
+    // 1. 把knowledges这个state放在这里 然后通过参数KnowledgeForm传递下去
+    // 每当用户点击按钮时，我们就调用setKnowledges, 然后知识就会被添加到这个state里面
+    // 这样的优点是不需要大幅改动目前的代码，缺点是会重新渲染他不应该渲染的组件 也就是当前组件
+    // 2. 把创建智能体和增加知识库两个功能分开。在创建智能体的时候是不能添加知识的
+    // 但是创建完成之后，我们可以随时的继续向其中不断的添加知识
+    // 先用第一种把功能验证完毕
+    // 第一种写完之后再写第二种其实也很简单，因为组件都是复用的
+    // rename the variable, destructuring must have this feature!
+    if (topics.length === 0) {
+      // console.error("Error: no knowledges");
+      console.log("no knowledges");
+      return;
+    }
+    const { error: addKnowledgesError } = await agentClient.addKnowledges({
+      agent_id: agent.id,
+      knowledge_ids: topics.map((topic) => topic.knowledgeId),
+    });
+    if (addKnowledgesError) {
+      console.error("Error:", addKnowledgesError);
+      return;
+    }
   };
 
   // 跟knowledge相关的state显然需要在这里创建
@@ -184,7 +237,7 @@ export function CreateAgentForm() {
         </Button>
       </Box>
 
-      <KnowledgeForm />
+      <KnowledgeForm topics={topics} setTopics={setTopics} />
     </>
   );
 }

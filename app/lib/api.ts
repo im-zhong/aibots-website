@@ -40,6 +40,7 @@ export const api = {
       url: `${API_URL}/auth/verify`,
     },
   },
+
   user: {
     me: {
       method: "GET",
@@ -55,6 +56,10 @@ export const api = {
     create: {
       method: "POST",
       url: `${API_URL}/agent/create`,
+    },
+    addKnowledges: {
+      method: "POST",
+      url: `${API_URL}/agent/add-knowledges`,
     },
   },
 

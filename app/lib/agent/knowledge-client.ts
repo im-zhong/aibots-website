@@ -21,9 +21,10 @@ export class KnowledgeClient {
         }),
       });
 
+      const data = await response.json();
       switch (response.status) {
         case 200:
-          return { id: uuidv4() };
+          return { id: data as string };
         case 422:
           return { error: "Validation Error" };
         default:
@@ -54,7 +55,7 @@ export class KnowledgeClient {
       const data = await response.json();
       switch (response.status) {
         case 200:
-          return { id: data.id };
+          return { id: data as string };
         case 422:
           return { error: "Validation Error" };
         default:
@@ -85,7 +86,7 @@ export class KnowledgeClient {
       const data = await response.json();
       switch (response.status) {
         case 200:
-          return { id: data.id };
+          return { id: data as string };
         case 422:
           return { error: "Validation Error" };
         default:
