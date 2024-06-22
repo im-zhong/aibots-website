@@ -75,8 +75,11 @@ export class KnowledgeClient {
     url: string;
   }): Promise<{ id?: string; error?: string }> {
     try {
-      const response = await fetch(api.knowledge.uploadFile.url, {
-        method: api.knowledge.uploadFile.method,
+      const response = await fetch(api.knowledge.uploadUrl.url, {
+        method: api.knowledge.uploadUrl.method,
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           knowledge_id: knowledge_id,
           url: url,
