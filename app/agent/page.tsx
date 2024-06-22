@@ -7,7 +7,7 @@ import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
-import AgentCard from "@/app/ui/agent/agent-card";
+import { AgentCard } from "@/app/ui/agent/agent-card";
 import { Agent, agentClient } from "@/app/lib/agent/agent-client";
 
 const Item = styled(Paper)(({ theme }) => ({

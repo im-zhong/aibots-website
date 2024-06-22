@@ -29,22 +29,11 @@ export default function SideNav() {
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
       <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-
         <ListItem>
           <ListItemButton>
             <ListItemIcon>{<InboxIcon />}</ListItemIcon>
             <ListItemText>
-              <Link href="/agent/chat">Chat</Link>
+              <Link href="/agent">Home</Link>
             </ListItemText>
           </ListItemButton>
         </ListItem>
@@ -57,19 +46,15 @@ export default function SideNav() {
             </ListItemText>
           </ListItemButton>
         </ListItem>
-      </List>
-      <Divider />
-      <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+
+        <ListItem>
+          <ListItemButton>
+            <ListItemIcon>{<InboxIcon />}</ListItemIcon>
+            <ListItemText>
+              <Link href="/agent/my-chats">My Chats</Link>
+            </ListItemText>
+          </ListItemButton>
+        </ListItem>
       </List>
     </Box>
   );
