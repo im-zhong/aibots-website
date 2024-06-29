@@ -53,7 +53,8 @@ export default function UserPopover() {
     // 用来重置状态
     resetUserContext?.();
     router.refresh();
-    router.replace(path.auth.login);
+    // router.replace(path.auth.login);
+    router.replace(path.index);
   };
 
   const open = Boolean(anchorEl);

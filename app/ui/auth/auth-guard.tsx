@@ -42,7 +42,7 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
       setIsAuthenticated(false);
       console.log("error", error);
       // 如果有错误，我们就跳转到登录页面
-      router.push("/auth/login");
+      router.push("/index");
       return;
     }
 

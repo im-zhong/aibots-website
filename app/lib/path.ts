@@ -11,4 +11,5 @@ export const path = {
     create: "/agent/create",
     chat: "/agent/chat",
   },
+  index: "/home",
 } as const;
