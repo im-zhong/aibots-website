@@ -6,8 +6,13 @@ import { Typography, Box, Stack, TextField, Button } from "@mui/material";
 export function Prompt() {
   return (
     <>
-      <Stack>
-        <Stack direction="row">
+      <Stack
+        direction="column"
+        justifyContent="center"
+        spacing={9}
+        height={"60vh"}
+      >
+        <Stack direction="row" justifyContent="center" spacing={5}>
           <TextField variant="outlined" label="prompt"></TextField>
           <Button variant="contained" color="primary">
             generate

@@ -1,10 +1,16 @@
 // 2024/6/29
 // zhangzhong
+
 import { Typography, Box, Stack, Button } from "@mui/material";
 export function Starter() {
   return (
     <>
-      <Stack>
+      <Stack
+        direction="column"
+        justifyContent="center"
+        spacing={1}
+        height={"60vh"}
+      >
         <Typography
           variant="h2"
           sx={{

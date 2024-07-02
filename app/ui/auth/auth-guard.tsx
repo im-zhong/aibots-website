@@ -4,6 +4,7 @@
 import * as React from "react";
 import { useRouter } from "next/navigation";
 import { UserContext } from "@/app/ui/auth/user-provider";
+import { path } from "@/app/lib/path";
 
 export default function AuthGuard({ children }: { children: React.ReactNode }) {
   // use router
@@ -42,7 +43,7 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
       setIsAuthenticated(false);
       console.log("error", error);
       // 如果有错误，我们就跳转到登录页面
-      router.push("/index");
+      router.push(path.index);
       return;
     }
 
