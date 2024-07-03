@@ -30,23 +30,5 @@ export default function Page({ params }: { params: { token: string } }) {
   // 所以这里应该先提供一个form页面
   // 然后点击submit按钮才发送reset passwrod api
 
-  return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        // gap: 2,
-        // The vh unit in CSS stands for "viewport height".
-        // It is a relative unit that represents 1% of the height of the viewport. The viewport is the visible area of the webpage on the user's screen.
-        height: "100vh",
-      }}
-    >
-      <Typography variant="h4" component="h1" sx={{ mb: 2 }}>
-        Reset Password
-      </Typography>
-      <ResetPasswordForm token={params.token} />
-    </Box>
-  );
+  return <ResetPasswordForm token={params.token} />;
 }
