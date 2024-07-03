@@ -4,25 +4,75 @@
 "use client";
 
 import * as React from "react";
-import { Button, TextField, Box, Typography } from "@mui/material";
+import {
+  Button,
+  Typography,
+  Stack,
+  FormHelperText,
+  FormControl,
+  OutlinedInput,
+  InputLabel,
+  InputAdornment,
+  Alert,
+  Box,
+  TextField,
+} from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Controller, set, useForm } from "react-hook-form";
 import { Link } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/app/lib/auth/auth_client";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-interface RegisterFormData {
-  email: string;
-  password: string;
-  name: string;
+const schema = z.object({
+  name: z.string().min(1, { message: "name is required." }),
+  email: z.string().min(1, { message: "email is required." }).email(),
+  password: z
+    .string()
+    .min(8, { message: "password at least has 8 characters." }),
+});
+
+type RegisterFormData = z.infer<typeof schema>;
+
+function RegisterHeader() {
+  // TODO
+  // register用粗体会好看一些
+  // 输入框再细长一些好看
+  // 而且输入框的大小不要发生变化啊！！！
+  return (
+    <Box>
+      <Typography variant="h4" component="h1" sx={{ mb: 2 }}>
+        Register
+      </Typography>
+      <Typography variant="body2" sx={{ mb: 2 }}>
+        Already have an account? <Link href="/auth/login">login</Link> it.
+      </Typography>
+      <Typography variant="body2" sx={{ mb: 2 }}>
+        Forget your password? <Link href="/auth/forgot-password">reset</Link>{" "}
+        it.
+      </Typography>
+    </Box>
+  );
 }
 
-export default function RegisterForm() {
+function RegisterFooter({ error }: { error?: string }) {
+  return <>{error && <Alert severity="warning">error</Alert>}</>;
+}
+
+export function RegisterForm() {
   const router = useRouter();
-  const { handleSubmit, control } = useForm<RegisterFormData>();
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+    setError,
+  } = useForm<RegisterFormData>({ resolver: zodResolver(schema) });
 
   // 如果发送了确认邮件，我们应该告诉用户去邮箱查看邮件
   // 这显然需要一个state
   const [isSendEmail, setIsSendEmail] = React.useState<boolean>(false);
+  const [passwordVisible, setPasswordVisible] = React.useState<boolean>(false);
 
   const onSubmit = async (data: RegisterFormData) => {
     console.log(data);
@@ -36,6 +86,10 @@ export default function RegisterForm() {
       //   });
       //   const json = await response.json();
       const { error } = await authClient.register({ ...data });
+      if (error) {
+        setError("root", { message: error });
+        return;
+      }
       // console.log(json);
       // 注册成功之后应该重定向的登录页面
       // redirect("/auth/login");
@@ -59,57 +113,84 @@ export default function RegisterForm() {
   };
 
   return (
-    <Box
-      component={"form"}
-      onSubmit={handleSubmit(onSubmit)}
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        gap: 2,
-      }}
-    >
-      <Controller
-        name="name"
-        control={control}
-        defaultValue=""
-        render={({ field }) => (
-          <TextField label="Name" variant="outlined" {...field} />
-        )}
-      ></Controller>
+    <Stack spacing={2}>
+      <RegisterHeader />
 
-      <Controller
-        name="email"
-        control={control}
-        defaultValue=""
-        render={({ field }) => (
-          <TextField label="Email" type="email" variant="outlined" {...field} />
-        )}
-      ></Controller>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Stack spacing={2}>
+          <Controller
+            name="name"
+            control={control}
+            render={({ field }) => (
+              <FormControl error={Boolean(errors.name)}>
+                <InputLabel>name</InputLabel>
+                <OutlinedInput {...field} label="name" />{" "}
+                {errors.name && (
+                  <FormHelperText>{errors.name.message}</FormHelperText>
+                )}
+              </FormControl>
+            )}
+          ></Controller>
 
-      <Controller
-        name="password"
-        control={control}
-        defaultValue=""
-        render={({ field }) => (
-          <TextField
-            label="Password"
-            type="password"
-            variant="outlined"
-            {...field}
-          />
-        )}
-      ></Controller>
+          <Controller
+            name="email"
+            control={control}
+            render={({ field }) => (
+              <FormControl error={Boolean(errors.email)}>
+                <InputLabel>email</InputLabel>
+                <OutlinedInput {...field} label="email" type="email" />{" "}
+                {errors.email && (
+                  <FormHelperText>{errors.email.message}</FormHelperText>
+                )}
+              </FormControl>
+            )}
+          ></Controller>
 
-      <Button variant="contained" type="submit">
-        Register
-      </Button>
+          <Controller
+            name="password"
+            control={control}
+            render={({ field }) => (
+              <FormControl error={Boolean(errors.password)}>
+                <InputLabel>password</InputLabel>
+                <OutlinedInput
+                  {...field}
+                  label="password"
+                  type={passwordVisible ? "text" : "password"}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      {passwordVisible ? (
+                        <Visibility
+                          cursor="pointer"
+                          onClick={() => setPasswordVisible(false)}
+                        />
+                      ) : (
+                        <VisibilityOff
+                          cursor="pointer"
+                          onClick={() => setPasswordVisible(true)}
+                        />
+                      )}
+                    </InputAdornment>
+                  }
+                />
+                {errors.password && (
+                  <FormHelperText>{errors.password.message}</FormHelperText>
+                )}
+              </FormControl>
+            )}
+          ></Controller>
+
+          <Button variant="contained" type="submit">
+            Register
+          </Button>
+        </Stack>
+      </form>
 
       {isSendEmail && (
-        <Typography variant="subtitle1" sx={{ mb: 2 }}>
+        <Alert severity="success">
           We have sent a verify email to your email address, please check it.
-        </Typography>
+        </Alert>
       )}
-    </Box>
+      <RegisterFooter error={errors.root?.message} />
+    </Stack>
   );
 }
