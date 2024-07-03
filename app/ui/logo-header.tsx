@@ -14,14 +14,14 @@ export function Logo() {
         {/* Adjusted for flex display */}
         <Image src={logoImage} alt="" width={61} height={61} />
         <Divider
-          sx={{ borderColor: "white" }}
+          sx={{ borderColor: "black" }}
           orientation="vertical"
           flexItem
         />{" "}
         {/* Vertical Divider */}
         <Typography
           sx={{
-            color: "white",
+            color: "black",
           }}
           variant="h4"
         >
@@ -35,7 +35,11 @@ export function Logo() {
 export function LogoHeader() {
   return (
     <>
-      <Box>
+      <Box
+        sx={{
+          border: "1px solid red",
+        }}
+      >
         <Logo />
       </Box>
     </>

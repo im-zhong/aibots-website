@@ -12,16 +12,7 @@ import RegisterForm from "@/app/ui/auth/register-from";
 
 export default function Page() {
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        // gap: 2,
-        height: "100vh",
-      }}
-    >
+    <Box>
       <Typography variant="h4" component="h1" sx={{ mb: 2 }}>
         Register
       </Typography>

@@ -4,7 +4,8 @@ import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import theme from "@/app/ui/theme";
 import { UserProvider } from "@/app/ui/auth/user-provider";
-// import "@/app/ui/global.css";
+
+import "@/app/styles/global.css";
 
 export default function RootLayout(props: { children: React.ReactNode }) {
   return (

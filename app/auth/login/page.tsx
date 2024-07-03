@@ -9,31 +9,27 @@ import { Link } from "@mui/material";
 import LoginForm from "@/app/ui/auth/login-form";
 
 export default function Page() {
+  // 现在有一个问题
+  // 整个登录页是否看作一整个组件？我认为应该看作一整个组件
+  // 那这样的话最好写在一个文件里面
+  // 如果层次过多了 可以写成几个函数，
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        // gap: 2,
-        // The vh unit in CSS stands for "viewport height".
-        // It is a relative unit that represents 1% of the height of the viewport. The viewport is the visible area of the webpage on the user's screen.
-        height: "100vh",
-      }}
-    >
-      <Typography variant="h4" component="h1" sx={{ mb: 2 }}>
-        Login
-      </Typography>
-      <LoginForm />
-      <Typography variant="subtitle1" sx={{ mb: 2 }}>
-        Does not have an account? <Link href="/auth/register">register</Link>{" "}
-        one.
-      </Typography>
-      <Typography variant="subtitle1" sx={{ mb: 2 }}>
-        Forget your password? <Link href="/auth/forgot-password">reset</Link>{" "}
-        it.
-      </Typography>
-    </Box>
+    // <Box
+    //   sx={{
+    //     display: "flex",
+    //     // flexDirection: "column",
+    //     alignItems: "center",
+    //     justifyContent: "center",
+    //     // gap: 2,
+    //     // The vh unit in CSS stands for "viewport height".
+    //     // It is a relative unit that represents 1% of the height of the viewport. The viewport is the visible area of the webpage on the user's screen.
+    //     height: "100%",
+    //     border: "1px solid black",
+    //   }}
+    // >
+
+    // </Box>
+
+    <LoginForm />
   );
 }
