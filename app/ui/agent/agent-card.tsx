@@ -52,7 +52,7 @@ export function AgentCard({ agent }: { agent: Agent }) {
   };
 
   return (
-    <Card sx={{ minWidth: 275 }}>
+    <Card sx={{ width: 200, height: 200 }}>
       <CardContent>
         <Avatar>Agent</Avatar>
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
