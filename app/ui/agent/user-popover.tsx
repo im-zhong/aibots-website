@@ -18,6 +18,8 @@ import * as React from "react";
 import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import { IconButton } from "@mui/material";
+import MoreIcon from "@mui/icons-material/MoreVert";
 
 export default function UserPopover() {
   const router = useRouter();
@@ -62,9 +64,19 @@ export default function UserPopover() {
 
   return (
     <div>
-      <Button aria-describedby={id} variant="contained" onClick={handleClick}>
+      <IconButton
+        size="large"
+        aria-label="show more"
+        aria-controls={"primary-search-account-menu-mobile"}
+        aria-haspopup="true"
+        onClick={handleClick}
+        color="inherit"
+      >
+        <MoreIcon />
+      </IconButton>
+      {/* <Button aria-describedby={id} variant="contained" onClick={handleClick}>
         {user?.name}
-      </Button>
+      </Button> */}
       <Popover
         id={id}
         open={open}

@@ -17,8 +17,11 @@ import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import Link from "next/link";
 import AuthGuard from "@/app/ui/auth/auth-guard";
+import { Toolbar } from "@mui/material";
 
-export default function SideNav() {
+const drawerWidth = 240;
+
+export default function LeftNav() {
   const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = (newOpen: boolean) => () => {
@@ -27,7 +30,7 @@ export default function SideNav() {
 
   // https://mui.com/material-ui/react-drawer/
   const DrawerList = (
-    <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
+    <Box sx={{}} role="presentation" onClick={toggleDrawer(false)}>
       <List>
         <ListItem>
           <ListItemButton>
@@ -63,12 +66,51 @@ export default function SideNav() {
   // 这样我就可以登出了
   return (
     <Drawer
-      anchor="left"
       variant="permanent"
-      open={open}
-      // onClose={toggleDrawer(false)}
+      sx={{
+        width: drawerWidth,
+        flexShrink: 0,
+        [`& .MuiDrawer-paper`]: {
+          width: drawerWidth,
+          boxSizing: "border-box",
+        },
+      }}
     >
-      {DrawerList}
+      {
+        // 原来如此，原来每个元素前面都有一个ToolBar占了一个位子
+        // 实际上AppBar是不参与布局的 他就是固定的
+      }
+      <Toolbar />
+      <Box sx={{ overflow: "auto" }}>
+        <List>
+          <ListItem>
+            <ListItemButton>
+              <ListItemIcon>{<InboxIcon />}</ListItemIcon>
+              <ListItemText>
+                <Link href="/agent">Home</Link>
+              </ListItemText>
+            </ListItemButton>
+          </ListItem>
+          <Divider />
+          <ListItem>
+            <ListItemButton>
+              <ListItemIcon>{<InboxIcon />}</ListItemIcon>
+              <ListItemText>
+                <Link href="/agent/create">Create Bot</Link>
+              </ListItemText>
+            </ListItemButton>
+          </ListItem>
+          <Divider />
+          <ListItem>
+            <ListItemButton>
+              <ListItemIcon>{<InboxIcon />}</ListItemIcon>
+              <ListItemText>
+                <Link href="/agent/my-chats">My Chats</Link>
+              </ListItemText>
+            </ListItemButton>
+          </ListItem>
+        </List>
+      </Box>
     </Drawer>
   );
 }

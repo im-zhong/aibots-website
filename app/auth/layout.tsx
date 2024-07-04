@@ -15,6 +15,10 @@ import { Stack } from "@mui/material";
 // 但是因为相对height计算要求其直系父亲必须具有定义的高度
 // 但是看起来我们嵌套了一大堆东西导致这个高度信息丢失了
 // 所以我们这里需要给一个height: 100vh
+
+// 仔细研究这个例子
+// https://mui.com/material-ui/react-drawer/#clipped-under-the-app-bar
+
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <GuestGuard>

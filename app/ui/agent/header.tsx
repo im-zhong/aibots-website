@@ -157,8 +157,16 @@ export default function PrimarySearchAppBar() {
   );
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+    <>
+      <AppBar
+        position="fixed"
+        sx={{
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+          // backdropFilter: "blur(10px)",
+          // // Ensure the color or transparency is set to let the blur effect show
+          // backgroundColor: "rgba(255, 255, 255, 0.7)",
+        }}
+      >
         <Toolbar>
           <IconButton
             size="large"
@@ -235,6 +243,6 @@ export default function PrimarySearchAppBar() {
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
-    </Box>
+    </>
   );
 }
