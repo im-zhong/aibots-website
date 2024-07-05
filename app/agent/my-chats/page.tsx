@@ -5,7 +5,8 @@
 "use client";
 
 import * as React from "react";
-import { Message, Chat, chatClient } from "@/app/lib/chat/chat_client";
+import { Message, Chat } from "@/app/lib/chat/types";
+import { chatClient } from "@/app/lib/chat/chat_client";
 import {
   Box,
   Paper,
@@ -13,9 +14,13 @@ import {
   Typography,
   Button,
   Divider,
+  Stack,
+  Container,
 } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { path } from "@/app/lib/path";
+import { ChatCard } from "@/app/ui/chat/chat-card";
+import { BigHeader } from "@/app/ui/common/big-header";
 
 export default function Page() {
   const [chats, setChats] = React.useState<Chat[]>([]);
@@ -55,30 +60,13 @@ export default function Page() {
   };
 
   return (
-    <>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          height: "100vh",
-          gap: 2,
-        }}
-      >
-        <Typography variant="h1">My Chats</Typography>
-        <Divider />
+    <Container>
+      <Stack direction="column" spacing={2}>
+        <BigHeader header="latest chats" />
         {chats.map((chat) => (
-          <Paper
-            key={chat.id}
-            onClick={handleClick({ chat: chat })}
-            sx={{ padding: 2, width: "50%" }}
-          >
-            <Typography>{chat.id}</Typography>
-            <Typography>{chat.user_id}</Typography>
-            <Typography>{chat.agent_id}</Typography>
-          </Paper>
+          <ChatCard key={chat.id} chat={chat} />
         ))}
-      </Box>
-    </>
+      </Stack>
+    </Container>
   );
 }

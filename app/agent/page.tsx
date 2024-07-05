@@ -11,6 +11,7 @@ import { AgentCard } from "@/app/ui/agent/agent-card";
 import { Agent, agentClient } from "@/app/lib/agent/agent-client";
 
 import { Divider, Typography } from "@mui/material";
+import { BigHeader } from "@/app/ui/common/big-header";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -24,11 +25,7 @@ function Topics({ topic, agents }: { topic: string; agents: Agent[] }) {
   return (
     <>
       <Stack direction="column" spacing={2}>
-        <Stack direction="row" alignContent="center" justifyContent="center">
-          <Divider flexItem sx={{ width: "30%", marginRight: 2 }} />
-          <Typography variant="h2">{topic}</Typography>
-          <Divider flexItem sx={{ width: "30%", marginLeft: 2 }} />
-        </Stack>
+        <BigHeader header={topic} />
 
         <Stack
           direction="row"

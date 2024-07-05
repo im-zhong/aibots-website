@@ -3,22 +3,7 @@
 
 import { api } from "@/app/lib/api";
 import { getToken } from "@/app/lib/common/token";
-
-export interface Message {
-  sender: number;
-  receiver: number;
-  is_start_of_stream: boolean;
-  is_end_of_stream: boolean;
-  content: string;
-}
-
-export interface Chat {
-  id: string;
-  user_id: string;
-  agent_id: string;
-  create_at: string;
-  chat_history: Message[];
-}
+import { Message, Chat } from "./types";
 
 // 我们需要在这里实现chat的websocket
 

@@ -175,6 +175,8 @@ export function AgentInfoForm({
             <AvatarUploader />
           </Stack>
 
+          <Divider />
+
           <Stack direction="column" spacing={1}>
             <Typography variant="h4">name*</Typography>
             <Controller

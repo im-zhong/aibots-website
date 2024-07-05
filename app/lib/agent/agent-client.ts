@@ -121,6 +121,21 @@ class AgentClient {
       return { agents: [], error: String(error) };
     }
   }
+
+  // TODO: 后端需要增加一个新的接口
+  async getAgent({
+    id,
+  }: {
+    id: string;
+  }): Promise<{ agent?: Agent; error?: string }> {
+    return {
+      agent: {
+        id: id,
+        name: "fake-name",
+        description: "fake-description",
+      } as Agent,
+    };
+  }
 }
 
 export const agentClient = new AgentClient();
