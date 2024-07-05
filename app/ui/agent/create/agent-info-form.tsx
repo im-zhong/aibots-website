@@ -18,6 +18,7 @@ import { UserContext } from "@/app/ui/auth/user-provider";
 import { Router } from "next/router";
 import { path } from "@/app/lib/path";
 import { Topic } from "@/app/lib/agent/types";
+import { AvatarUploader } from "@/app/ui/common/avatar-uploader";
 
 import { Stack, Avatar, Container } from "@mui/material";
 
@@ -171,7 +172,7 @@ export function AgentInfoForm({
           {/* <AvatarUploader /> */}
 
           <Stack alignItems="center" justifyContent="center">
-            <Avatar>N</Avatar>
+            <AvatarUploader />
           </Stack>
 
           <Stack direction="column" spacing={1}>
@@ -198,7 +199,13 @@ export function AgentInfoForm({
               name="description"
               control={control}
               render={({ field }) => (
-                <TextField label="Description" variant="outlined" {...field} />
+                <TextField
+                  multiline={true}
+                  rows={3}
+                  label="Description"
+                  variant="outlined"
+                  {...field}
+                />
               )}
             />
           </Stack>
@@ -212,7 +219,13 @@ export function AgentInfoForm({
               control={control}
               defaultValue=""
               render={({ field }) => (
-                <TextField label="Prompt" variant="outlined" {...field} />
+                <TextField
+                  label="Prompt"
+                  variant="outlined"
+                  multiline={true}
+                  rows={3}
+                  {...field}
+                />
               )}
             />
           </Stack>
