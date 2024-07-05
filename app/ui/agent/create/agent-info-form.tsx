@@ -99,6 +99,46 @@ export function AgentInfoForm({
     router.push(path.agent.home);
   };
 
+  function AbilitySwitch({
+    name,
+    control,
+    header,
+    description,
+  }: {
+    name: string;
+    control: any;
+    header: string;
+    description: string;
+  }) {
+    return (
+      <>
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <Stack direction="column">
+            <Typography variant="h6">{header}</Typography>
+            <Typography variant="body2">{description}</Typography>
+          </Stack>
+
+          <Controller
+            name={name}
+            control={control}
+            defaultValue={true}
+            render={({ field }) => (
+              <FormControlLabel
+                control={<Switch defaultChecked />}
+                label=""
+                {...field}
+              />
+            )}
+          />
+        </Stack>
+      </>
+    );
+  }
+
   return (
     <Stack direction="column" alignItems="center" spacing={2}>
       <Typography variant="h3">Agent Infomation</Typography>
@@ -182,92 +222,26 @@ export function AgentInfoForm({
           <Stack direction="column" spacing={1}>
             <Typography variant="h4">Ability</Typography>
 
-            <Stack
-              direction="row"
-              alignItems="center"
-              justifyContent="space-between"
-            >
-              <Stack direction="column">
-                <Typography variant="h6">Web Search Ability</Typography>
-                <Typography variant="body2">
-                  a long long long long long long long long long long long
-                  longlong long long long long longlong long long long long
-                  longlong long long long long long description to describe the
-                  ability
-                </Typography>
-              </Stack>
+            <AbilitySwitch
+              header="Web Search Ability"
+              description="a long long long long long long long long long longlong long long long longlong long long long longlong long long long longlong long long long longlong long long long long description to describe the ability"
+              name="web_search"
+              control={control}
+            />
 
-              <Controller
-                name="web_search"
-                control={control}
-                defaultValue={true}
-                render={({ field }) => (
-                  <FormControlLabel
-                    control={<Switch defaultChecked />}
-                    label=""
-                    {...field}
-                  />
-                )}
-              ></Controller>
-            </Stack>
+            <AbilitySwitch
+              header="Painting Ability"
+              description="a long long long long long long long long long longlong long long long longlong long long long longlong long long long longlong long long long longlong long long long long description to describe the ability"
+              name="painting"
+              control={control}
+            />
 
-            <Stack
-              direction="row"
-              alignItems="center"
-              justifyContent="space-between"
-            >
-              <Stack direction="column">
-                <Typography variant="h6">Painting Ability</Typography>
-                <Typography variant="body2">
-                  a long long long long long long long long long long long
-                  longlong long long long long longlong long long long long
-                  longlong long long long long long description to describe the
-                  ability
-                </Typography>
-              </Stack>
-
-              <Controller
-                name="painting"
-                control={control}
-                defaultValue={true}
-                render={({ field }) => (
-                  <FormControlLabel
-                    control={<Switch defaultChecked />}
-                    label=""
-                    {...field}
-                  />
-                )}
-              ></Controller>
-            </Stack>
-
-            <Stack
-              direction="row"
-              alignItems="center"
-              justifyContent="space-between"
-            >
-              <Stack direction="column">
-                <Typography variant="h6">Multi model Ability</Typography>
-                <Typography variant="body2">
-                  a long long long long long long long long long long long
-                  longlong long long long long longlong long long long long
-                  longlong long long long long long description to describe the
-                  ability
-                </Typography>
-              </Stack>
-
-              <Controller
-                name="multi_model"
-                control={control}
-                defaultValue={true}
-                render={({ field }) => (
-                  <FormControlLabel
-                    control={<Switch defaultChecked />}
-                    label=""
-                    {...field}
-                  />
-                )}
-              ></Controller>
-            </Stack>
+            <AbilitySwitch
+              header="Multi Model Ability"
+              description="a long long long long long long long long long longlong long long long longlong long long long longlong long long long longlong long long long longlong long long long long description to describe the ability"
+              name="multi_model"
+              control={control}
+            />
           </Stack>
 
           <Divider />
@@ -278,133 +252,5 @@ export function AgentInfoForm({
         </Stack>
       </form>
     </Stack>
-  );
-
-  return (
-    <>
-      <Box
-        component={"form"}
-        onSubmit={handleSubmit(onSubmit)}
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: 2,
-        }}
-      >
-        <Typography variant="h3" gutterBottom>
-          Agent Infomation
-        </Typography>
-        <Controller
-          name="name"
-          control={control}
-          defaultValue=""
-          render={({ field }) => (
-            <TextField label="Name" variant="outlined" {...field} />
-          )}
-        ></Controller>
-
-        <Controller
-          name="description"
-          control={control}
-          defaultValue=""
-          render={({ field }) => (
-            <TextField label="Description" variant="outlined" {...field} />
-          )}
-        ></Controller>
-
-        <Controller
-          name="prompt"
-          control={control}
-          defaultValue=""
-          render={({ field }) => (
-            <TextField label="Prompt" variant="outlined" {...field} />
-          )}
-        ></Controller>
-
-        <Divider />
-        <Typography variant="h3" gutterBottom>
-          Is Your could seen by others?
-        </Typography>
-        <Controller
-          name="is_shared"
-          control={control}
-          defaultValue={true}
-          render={({ field }) => (
-            <FormControlLabel
-              control={<Switch defaultChecked />}
-              label="is shared?"
-              {...field}
-            />
-          )}
-        ></Controller>
-
-        <Divider />
-        <Typography variant="h3" gutterBottom>
-          Give your Agent Capabilities!
-        </Typography>
-        <Controller
-          name="web_search"
-          control={control}
-          defaultValue={true}
-          render={({ field }) => (
-            <FormControlLabel
-              control={<Switch defaultChecked />}
-              label="web search"
-              {...field}
-            />
-          )}
-        ></Controller>
-        <Controller
-          name="painting"
-          control={control}
-          defaultValue={true}
-          render={({ field }) => (
-            <FormControlLabel
-              control={<Switch defaultChecked />}
-              label="painting"
-              {...field}
-            />
-          )}
-        ></Controller>
-
-        <Controller
-          name="multi_model"
-          control={control}
-          defaultValue={true}
-          render={({ field }) => (
-            <FormControlLabel
-              control={<Switch defaultChecked />}
-              label="multi model"
-              {...field}
-            />
-          )}
-        ></Controller>
-
-        {/* <Controller
-      name="knowledges"
-      control={control}
-      defaultValue={[]}
-      render={({ field }) => (
-        <TextField label="Knowledges" variant="outlined" {...field} />
-      )}
-    ></Controller> */}
-
-        {
-          // 这里需要加入knowledge state
-          // 显然我可以写成一个hook
-          // 这个部分和form分开
-          // 因为knowledge是可以动态增加的，但是表格的filed是固定的
-          // 而且knowledge实现起来肯定是需要state的 用form也不好实现
-          // 不如作为一个独立的参数 到时候传给api就ok拉
-          // 或者拿到数据再组织成 AgentCreate inteface也行
-          // const knowledges = useKnowledges();
-        }
-
-        <Button variant="contained" type="submit">
-          Create
-        </Button>
-      </Box>
-    </>
   );
 }
