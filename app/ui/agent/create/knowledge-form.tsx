@@ -21,9 +21,7 @@ export function KnowledgeForm({
 }) {
   return (
     <Stack direction="column" alignItems="center" spacing={2}>
-      <Typography variant="h3" gutterBottom>
-        Knowledges
-      </Typography>
+      <Typography variant="h3">Knowledges</Typography>
 
       <Typography variant="body2">
         Add knowledges for your agent. It could be a file or a website url. When

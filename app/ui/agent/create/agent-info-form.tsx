@@ -19,6 +19,8 @@ import { Router } from "next/router";
 import { path } from "@/app/lib/path";
 import { Topic } from "@/app/lib/agent/types";
 
+import { Stack, Avatar, Container } from "@mui/material";
+
 interface CreateAgentFormData {
   name: string;
   description: string;
@@ -96,6 +98,187 @@ export function AgentInfoForm({
     setTopics([]);
     router.push(path.agent.home);
   };
+
+  return (
+    <Stack direction="column" alignItems="center" spacing={2}>
+      <Typography variant="h3">Agent Infomation</Typography>
+
+      <Typography variant="body2">
+        Add knowledges for your agent. It could be a file or a website url. When
+        you ask questions about such topics, knowledge will be used.
+      </Typography>
+
+      <Divider
+        orientation="horizontal"
+        flexItem
+        sx={{ borderColor: "primary.main" }}
+      />
+
+      <form
+        style={{
+          width: "100%",
+        }}
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <Stack
+          sx={{
+            width: "100%",
+          }}
+          direction="column"
+          // alignItems="center"
+          spacing={2}
+        >
+          {/* <AvatarUploader /> */}
+
+          <Stack alignItems="center" justifyContent="center">
+            <Avatar>N</Avatar>
+          </Stack>
+
+          <Stack direction="column" spacing={1}>
+            <Typography variant="h4">name*</Typography>
+            <Controller
+              name="name"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  sx={{ width: "100%" }}
+                  label="name"
+                  variant="outlined"
+                  {...field}
+                />
+              )}
+            />
+          </Stack>
+
+          <Divider />
+
+          <Stack direction="column" spacing={1}>
+            <Typography variant="h4">description*</Typography>
+            <Controller
+              name="description"
+              control={control}
+              render={({ field }) => (
+                <TextField label="Description" variant="outlined" {...field} />
+              )}
+            />
+          </Stack>
+
+          <Divider />
+
+          <Stack direction="column" spacing={1}>
+            <Typography variant="h4">prompt*</Typography>
+            <Controller
+              name="prompt"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <TextField label="Prompt" variant="outlined" {...field} />
+              )}
+            />
+          </Stack>
+
+          <Divider />
+
+          <Stack direction="column" spacing={1}>
+            <Typography variant="h4">Ability</Typography>
+
+            <Stack
+              direction="row"
+              alignItems="center"
+              justifyContent="space-between"
+            >
+              <Stack direction="column">
+                <Typography variant="h6">Web Search Ability</Typography>
+                <Typography variant="body2">
+                  a long long long long long long long long long long long
+                  longlong long long long long longlong long long long long
+                  longlong long long long long long description to describe the
+                  ability
+                </Typography>
+              </Stack>
+
+              <Controller
+                name="web_search"
+                control={control}
+                defaultValue={true}
+                render={({ field }) => (
+                  <FormControlLabel
+                    control={<Switch defaultChecked />}
+                    label=""
+                    {...field}
+                  />
+                )}
+              ></Controller>
+            </Stack>
+
+            <Stack
+              direction="row"
+              alignItems="center"
+              justifyContent="space-between"
+            >
+              <Stack direction="column">
+                <Typography variant="h6">Painting Ability</Typography>
+                <Typography variant="body2">
+                  a long long long long long long long long long long long
+                  longlong long long long long longlong long long long long
+                  longlong long long long long long description to describe the
+                  ability
+                </Typography>
+              </Stack>
+
+              <Controller
+                name="painting"
+                control={control}
+                defaultValue={true}
+                render={({ field }) => (
+                  <FormControlLabel
+                    control={<Switch defaultChecked />}
+                    label=""
+                    {...field}
+                  />
+                )}
+              ></Controller>
+            </Stack>
+
+            <Stack
+              direction="row"
+              alignItems="center"
+              justifyContent="space-between"
+            >
+              <Stack direction="column">
+                <Typography variant="h6">Multi model Ability</Typography>
+                <Typography variant="body2">
+                  a long long long long long long long long long long long
+                  longlong long long long long longlong long long long long
+                  longlong long long long long long description to describe the
+                  ability
+                </Typography>
+              </Stack>
+
+              <Controller
+                name="multi_model"
+                control={control}
+                defaultValue={true}
+                render={({ field }) => (
+                  <FormControlLabel
+                    control={<Switch defaultChecked />}
+                    label=""
+                    {...field}
+                  />
+                )}
+              ></Controller>
+            </Stack>
+          </Stack>
+
+          <Divider />
+
+          <Button variant="contained" type="submit">
+            Create
+          </Button>
+        </Stack>
+      </form>
+    </Stack>
+  );
 
   return (
     <>
