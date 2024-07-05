@@ -20,13 +20,14 @@ import { authClient } from "@/app/lib/auth/auth_client";
 import FormControlLabel from "@mui/material/FormControlLabel";
 
 import Switch from "@mui/material/Switch";
-import { KnowledgeForm } from "@/app/ui/agent/knowledge";
+import { KnowledgeForm } from "@/app/ui/agent/create/knowledge-form";
 import Paper from "@mui/material/Paper";
 import { UserContext } from "@/app/ui/auth/user-provider";
 import { Router } from "next/router";
 import { path } from "@/app/lib/path";
-import { Topic } from "@/app/ui/agent/knowledge";
-import { AgentInfoForm } from "@/app/ui/agent/agent-info-form";
+import { Topic } from "@/app/lib/agent/types";
+import { AgentInfoForm } from "@/app/ui/agent/create/agent-info-form";
+import { Container, Stack } from "@mui/material";
 
 // 很明显 我们可以分成两个部分
 // 我们可以让左边是填写基础信息的表
@@ -55,8 +56,21 @@ export function CreateAgentForm() {
   const label = { inputProps: { "aria-label": "Switch demo" } };
   return (
     <>
-      <AgentInfoForm topics={topics} setTopics={setTopics} user={user} />
-      <KnowledgeForm topics={topics} setTopics={setTopics} />
+      <Container>
+        <Stack direction="row" sx={{ width: "100%" }}>
+          <Container sx={{ width: "50%" }}>
+            <KnowledgeForm topics={topics} setTopics={setTopics} />
+          </Container>
+          <Divider
+            orientation="vertical"
+            flexItem
+            sx={{ borderColor: "primary.main" }}
+          />
+          <Container sx={{ width: "50%" }}>
+            <AgentInfoForm topics={topics} setTopics={setTopics} user={user} />
+          </Container>
+        </Stack>
+      </Container>
     </>
   );
 }

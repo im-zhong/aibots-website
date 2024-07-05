@@ -71,7 +71,7 @@ export class KnowledgeClient {
     }
   }
 
-  async uploadUrl({
+  async uploadURL({
     knowledge_id,
     url,
   }: {

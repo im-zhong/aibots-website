@@ -16,15 +16,6 @@ import { useRouter } from "next/navigation";
 import { UserContext } from "@/app/ui/auth/user-provider";
 import { path } from "@/app/lib/path";
 
-const bull = (
-  <Box
-    component="span"
-    sx={{ display: "inline-block", mx: "2px", transform: "scale(0.8)" }}
-  >
-    •
-  </Box>
-);
-
 export function AgentCard({ agent }: { agent: Agent }) {
   const router = useRouter();
   const { user } = React.useContext(UserContext);

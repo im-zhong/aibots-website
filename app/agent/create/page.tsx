@@ -11,7 +11,7 @@ import { Controller, useForm } from "react-hook-form";
 import { Link } from "@mui/material";
 import { useRouter } from "next/navigation";
 import Dropzone, { useDropzone } from "react-dropzone";
-import { CreateAgentForm } from "@/app/ui/agent/create-agent-form";
+import { CreateAgentForm } from "@/app/ui/agent/create/create-agent-form";
 
 // interface CreateBotFormData {
 //   name: string;
@@ -182,21 +182,5 @@ export default function Page() {
 
   // <CreateBotForm knowledges={knowledges} />
   // <Basic knowledges={knowledges} setKnowledges={setKnowledges} />
-  return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        // gap: 2,
-        height: "100vh",
-      }}
-    >
-      <Typography variant="h4" component="h1" sx={{ mb: 2 }}>
-        Create Bot
-      </Typography>
-      <CreateAgentForm />
-    </Box>
-  );
+  return <CreateAgentForm />;
 }

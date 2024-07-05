@@ -12,13 +12,12 @@ import { authClient, User } from "@/app/lib/auth/auth_client";
 import FormControlLabel from "@mui/material/FormControlLabel";
 
 import Switch from "@mui/material/Switch";
-import { KnowledgeForm } from "@/app/ui/agent/knowledge";
+
 import Paper from "@mui/material/Paper";
 import { UserContext } from "@/app/ui/auth/user-provider";
 import { Router } from "next/router";
 import { path } from "@/app/lib/path";
-
-import { Topic } from "@/app/ui/agent/knowledge";
+import { Topic } from "@/app/lib/agent/types";
 
 interface CreateAgentFormData {
   name: string;
