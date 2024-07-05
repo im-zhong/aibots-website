@@ -33,6 +33,11 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
+export interface Topic {
+  topic: string;
+  knowledgeId: string;
+}
+
 // 对于每一个知识topic
 // 有许多知识点
 // 那么他需要的参数就是一个 list[string]
