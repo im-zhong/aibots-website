@@ -59,6 +59,16 @@ export function InputWindow({
     chatBot.current?.sendMessage(newMessage);
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === "Enter" && !event.shiftKey) {
+      // Check if Enter is pressed without the Shift key
+      event.preventDefault(); // Prevent default to avoid a new line in textarea for example
+      // sendMessage(inputValue); // Assuming sendMessage is your function to handle sending messages
+      // setInputValue(""); // Clear the input field
+      handleButtonClick();
+    }
+  };
+
   // 在这几款度的时候需要考虑到左侧的sidebar
   // 把左侧的像素减掉就ok了
   // Apply the position: 'fixed', bottom: 0, and width: '100%' styles to the Box to ensure it sticks to the bottom and spans the entire width of the viewport
@@ -66,10 +76,10 @@ export function InputWindow({
     <>
       <Box
         sx={{
-          border: "1px solid red",
+          // border: "1px solid red",
           position: "fixed",
           bottom: 0,
-          left: 250,
+          left: 200,
           right: 0,
           padding: "10px",
           background: "#fff", // Optional: to match your design
@@ -84,34 +94,41 @@ export function InputWindow({
         <Button onClick={handleButtonClick}>post</Button> */}
 
         <Stack alignItems="center" justifyContent="center">
-          <CustomizedInputBase />
+          <Paper
+            component="form"
+            sx={{
+              p: "2px 4px",
+              display: "flex",
+              alignItems: "center",
+              width: 600,
+            }}
+          >
+            <IconButton sx={{ p: "10px" }} aria-label="menu">
+              <ChatBubbleOutlineIcon />
+            </IconButton>
+            <InputBase
+              sx={{ ml: 1, flex: 1 }}
+              placeholder="ask agent ..."
+              value={inputValue}
+              inputProps={{ "aria-label": "ask agent ..." }}
+              onChange={(e) => setInputValue(e.target.value)}
+              onKeyDown={handleKeyDown}
+            />
+            <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
+              <MicNoneIcon />
+            </IconButton>
+            <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+            <IconButton
+              color="primary"
+              sx={{ p: "10px" }}
+              aria-label="directions"
+              onClick={handleButtonClick}
+            >
+              <SendIcon />
+            </IconButton>
+          </Paper>
         </Stack>
       </Box>
     </>
-  );
-}
-
-export function CustomizedInputBase() {
-  return (
-    <Paper
-      component="form"
-      sx={{ p: "2px 4px", display: "flex", alignItems: "center", width: 600 }}
-    >
-      <IconButton sx={{ p: "10px" }} aria-label="menu">
-        <ChatBubbleOutlineIcon />
-      </IconButton>
-      <InputBase
-        sx={{ ml: 1, flex: 1 }}
-        placeholder="ask agent ..."
-        inputProps={{ "aria-label": "ask agent ..." }}
-      />
-      <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
-        <MicNoneIcon />
-      </IconButton>
-      <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-      <IconButton color="primary" sx={{ p: "10px" }} aria-label="directions">
-        <SendIcon />
-      </IconButton>
-    </Paper>
   );
 }

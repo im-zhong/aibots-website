@@ -47,7 +47,7 @@ function Topics({ topic, agents }: { topic: string; agents: Agent[] }) {
                 margin: "5px",
               }}
             >
-              <AgentCard agent={agent} />
+              <AgentCard agent={agent} limit={40} />
               {/* <Box
                 sx={{
                   width: "200px",

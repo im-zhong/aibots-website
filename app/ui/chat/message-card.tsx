@@ -16,11 +16,13 @@ import {
   Divider,
   Typography,
   Container,
+  Box,
 } from "@mui/material";
 import { Message } from "@/app/lib/chat/types";
 import { Agent } from "@/app/lib/agent/agent-client";
 import { User } from "@/app/lib/auth/auth_client";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import theme from "@/app/ui/theme";
 
 import { MarkdownField } from "./markdown-field";
 
@@ -64,7 +66,13 @@ export function MessageCard({
   };
 
   return (
-    <Card>
+    <Card
+      sx={
+        {
+          // backgroundColor: theme.palette.grey[200],
+        }
+      }
+    >
       <CardHeader
         avatar={
           <Avatar>
@@ -95,22 +103,30 @@ export function MessageCard({
         subheader="September 14, 2016"
       />
       <Divider />
-      <CardContent
-        sx={{
-          padding: 0,
-          margin: 0,
-          border: "1px solid red",
-          backgroundColor: "yellow",
-          "&:last-child": {
-            // Targeting the last-child pseudo-class can help remove padding applied by Material-UI
-            paddingBottom: 0,
-          },
-        }}
+      <Box
+        sx={
+          {
+            // backgroundColor: theme.palette.grey[200],
+          }
+        }
       >
-        <Container>
-          <MarkdownField markdown={message.content}></MarkdownField>
-        </Container>
-      </CardContent>
+        <CardContent
+          sx={{
+            padding: 0,
+            margin: 0,
+            border: "0px solid",
+            // backgroundColor: theme.palette.grey[200],
+            "&:last-child": {
+              // Targeting the last-child pseudo-class can help remove padding applied by Material-UI
+              paddingBottom: 0,
+            },
+          }}
+        >
+          <Container>
+            <MarkdownField markdown={message.content}></MarkdownField>
+          </Container>
+        </CardContent>
+      </Box>
     </Card>
   );
 }

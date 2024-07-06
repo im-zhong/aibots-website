@@ -19,7 +19,7 @@ import { chatClient, ChatBot } from "@/app/lib/chat/chat_client";
 import { Message } from "@/app/lib/chat/types";
 import { ChatWindow } from "@/app/ui/chat/chat-window";
 import { InputWindow } from "@/app/ui/chat/input-window";
-import { AgentCard } from "@/app/ui/agent/agent-card";
+import { AgentCard } from "@/app/ui/chat/agent-card";
 import { User } from "@/app/lib/auth/auth_client";
 import { Agent } from "@/app/lib/agent/agent-client";
 

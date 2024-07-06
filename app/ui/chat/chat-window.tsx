@@ -2,6 +2,7 @@
 // zhangzhong
 
 "use client";
+import * as React from "react";
 import { useState, useEffect, useRef } from "react";
 import {
   Box,
@@ -32,8 +33,18 @@ export function ChatWindow({
   // 先把静态页面写出来
   // 再写动态页面
 
+  const bottomRef = React.useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [chatHistory]);
+
   return (
-    <Container>
+    <Container
+      sx={{
+        width: "60%",
+      }}
+    >
       <Stack direction="column" spacing={2}>
         {chatHistory.map((message) => (
           <MessageCard
@@ -43,6 +54,17 @@ export function ChatWindow({
             agent={agent}
           />
         ))}
+        {
+          // 哪一个东西垫一下，否则最新的消息会被输入框遮住
+          // 刚好可以作为scrolldown的目标 一举两得！
+        }
+        <div
+          ref={bottomRef}
+          style={{
+            width: 100,
+            height: 55,
+          }}
+        ></div>
       </Stack>
     </Container>
   );

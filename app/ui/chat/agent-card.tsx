@@ -45,7 +45,7 @@ function ClickableFavoriteIcon() {
   );
 }
 
-export function AgentCard({ agent, limit }: { agent: Agent; limit: number }) {
+export function AgentCard({ agent }: { agent: Agent }) {
   const router = useRouter();
   const { user } = React.useContext(UserContext);
   if (!user) {
@@ -76,15 +76,17 @@ export function AgentCard({ agent, limit }: { agent: Agent; limit: number }) {
 
   return (
     <Card
-      sx={{
-        width: 300,
-        //height: 200,
-        // "&:last-child": {
-        //   // Targeting the last-child pseudo-class can help remove padding applied by Material-UI
-        //   paddingBottom: 0,
-        //   marginBottom: 0,
-        // },
-      }}
+      sx={
+        {
+          // width: 300,
+          //height: 200,
+          // "&:last-child": {
+          //   // Targeting the last-child pseudo-class can help remove padding applied by Material-UI
+          //   paddingBottom: 0,
+          //   marginBottom: 0,
+          // },
+        }
+      }
     >
       <CardHeader
         avatar={
@@ -109,16 +111,9 @@ export function AgentCard({ agent, limit }: { agent: Agent; limit: number }) {
           variant="body2"
           color="text.secondary"
         >
-          {description.slice(0, limit) + "..."}
+          {description}
         </Typography>
       </CardContent>
-
-      <CardActions disableSpacing>
-        <ClickableFavoriteIcon />
-        <IconButton aria-label="chat" onClick={handleClick}>
-          <ChatBubbleOutlineIcon />
-        </IconButton>
-      </CardActions>
     </Card>
   );
 }
