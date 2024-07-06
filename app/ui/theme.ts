@@ -3,6 +3,9 @@
 import { createTheme } from "@mui/material/styles";
 import { roboto } from "@/app/ui/font";
 
+// primary: #81D8CF
+// secondary: #d8818a
+
 const theme = createTheme({
   palette: {
     mode: "light",

@@ -2,6 +2,9 @@
 // zhangzhong
 "use client";
 
+// & xxx in css selector
+// It's a way to reference the current component or element on which the styles are being applied.
+
 import { useRouter } from "next/navigation";
 
 import { UserContext } from "@/app/ui/auth/user-provider";
