@@ -14,7 +14,7 @@ import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import Link from "next/link";
 import AuthGuard from "@/app/ui/auth/auth-guard";
-import LeftNav from "@/app/ui/agent/side-nav";
+import { LeftNav } from "@/app/ui/agent/side-nav";
 import TopNav from "@/app/ui/agent/header";
 import {
   Stack,
