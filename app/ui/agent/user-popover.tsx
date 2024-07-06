@@ -23,6 +23,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { IconButton } from "@mui/material";
 import MoreIcon from "@mui/icons-material/MoreVert";
+import AccountCircle from "@mui/icons-material/AccountCircle";
 
 export default function UserPopover() {
   const router = useRouter();
@@ -66,16 +67,17 @@ export default function UserPopover() {
   const id = open ? "simple-popover" : undefined;
 
   return (
-    <div>
+    <>
       <IconButton
         size="large"
-        aria-label="show more"
-        aria-controls={"primary-search-account-menu-mobile"}
+        edge="end"
+        aria-label="account of current user"
+        // aria-controls={menuId}
         aria-haspopup="true"
         onClick={handleClick}
-        color="inherit"
+        // color="inherit"
       >
-        <MoreIcon />
+        <AccountCircle />
       </IconButton>
       {/* <Button aria-describedby={id} variant="contained" onClick={handleClick}>
         {user?.name}
@@ -131,7 +133,7 @@ export default function UserPopover() {
           </MenuItem>
         </MenuList>
       </Popover>
-    </div>
+    </>
   );
 }
 
