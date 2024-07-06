@@ -10,17 +10,23 @@ import Dropzone, { useDropzone } from "react-dropzone";
 import { agentClient } from "@/app/lib/agent/agent-client";
 import { authClient, User } from "@/app/lib/auth/auth_client";
 import FormControlLabel from "@mui/material/FormControlLabel";
-
+import SmartToyIcon from "@mui/icons-material/SmartToy";
+import DescriptionIcon from "@mui/icons-material/Description";
 import Switch from "@mui/material/Switch";
-
+import TipsAndUpdatesIcon from "@mui/icons-material/TipsAndUpdates";
 import Paper from "@mui/material/Paper";
 import { UserContext } from "@/app/ui/auth/user-provider";
 import { Router } from "next/router";
 import { path } from "@/app/lib/path";
 import { Topic } from "@/app/lib/agent/types";
 import { AvatarUploader } from "@/app/ui/common/avatar-uploader";
+import LanguageIcon from "@mui/icons-material/Language";
+import ColorLensIcon from "@mui/icons-material/ColorLens";
+import DoneAllIcon from "@mui/icons-material/DoneAll";
+import ShareIcon from "@mui/icons-material/Share";
 
 import { Stack, Avatar, Container } from "@mui/material";
+import theme from "@/app/ui/theme";
 
 interface CreateAgentFormData {
   name: string;
@@ -32,6 +38,89 @@ interface CreateAgentFormData {
   multi_model: boolean;
   // knowledge 通过额外的state传入
   // knowledges: string[];
+}
+
+function AbilitySwitch({
+  name,
+  control,
+  header,
+  description,
+  icon,
+}: {
+  name: string;
+  control: any;
+  header: string;
+  description: string;
+  icon: any;
+}) {
+  return (
+    <>
+      <Stack direction="row" alignItems="center" justifyContent="space-between">
+        <Stack direction="column">
+          <Stack direction="row" alignItems="center" spacing={1}>
+            {icon}
+            <Typography variant="h6">{header}</Typography>
+          </Stack>
+
+          <Typography variant="body2">{description}</Typography>
+        </Stack>
+
+        <Controller
+          name={name}
+          control={control}
+          defaultValue={true}
+          render={({ field }) => (
+            <FormControlLabel
+              control={<Switch defaultChecked />}
+              label=""
+              {...field}
+            />
+          )}
+        />
+      </Stack>
+    </>
+  );
+}
+
+function TextFieldWithLabel({
+  label,
+  control,
+  name,
+  rows,
+  icon,
+}: {
+  label: string;
+  control: any;
+  name: string;
+  rows: number;
+  icon: any;
+}) {
+  return (
+    <Stack direction="column" spacing={1}>
+      <Stack direction="row" alignItems="center" spacing={1}>
+        {icon}
+        <Typography variant="h5">
+          {label}
+          <span style={{ color: "red" }}>*</span>
+        </Typography>
+      </Stack>
+
+      <Controller
+        name={name}
+        control={control}
+        render={({ field }) => (
+          <TextField
+            sx={{ width: "100%" }}
+            multiline={rows > 1 ? true : false}
+            rows={rows}
+            label={label}
+            variant="outlined"
+            {...field}
+          />
+        )}
+      />
+    </Stack>
+  );
 }
 
 export function AgentInfoForm({
@@ -100,51 +189,11 @@ export function AgentInfoForm({
     router.push(path.agent.home);
   };
 
-  function AbilitySwitch({
-    name,
-    control,
-    header,
-    description,
-  }: {
-    name: string;
-    control: any;
-    header: string;
-    description: string;
-  }) {
-    return (
-      <>
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="space-between"
-        >
-          <Stack direction="column">
-            <Typography variant="h6">{header}</Typography>
-            <Typography variant="body2">{description}</Typography>
-          </Stack>
-
-          <Controller
-            name={name}
-            control={control}
-            defaultValue={true}
-            render={({ field }) => (
-              <FormControlLabel
-                control={<Switch defaultChecked />}
-                label=""
-                {...field}
-              />
-            )}
-          />
-        </Stack>
-      </>
-    );
-  }
-
   return (
     <Stack direction="column" alignItems="center" spacing={2}>
       <Typography variant="h3">Agent Infomation</Typography>
 
-      <Typography variant="body2">
+      <Typography variant="body2" color={theme.palette.grey[500]}>
         Add knowledges for your agent. It could be a file or a website url. When
         you ask questions about such topics, knowledge will be used.
       </Typography>
@@ -177,71 +226,43 @@ export function AgentInfoForm({
 
           <Divider />
 
-          <Stack direction="column" spacing={1}>
-            <Typography variant="h4">name*</Typography>
-            <Controller
-              name="name"
-              control={control}
-              render={({ field }) => (
-                <TextField
-                  sx={{ width: "100%" }}
-                  label="name"
-                  variant="outlined"
-                  {...field}
-                />
-              )}
-            />
-          </Stack>
+          <TextFieldWithLabel
+            name="name"
+            control={control}
+            label="name"
+            rows={1}
+            icon={<SmartToyIcon fontSize="small" />}
+          />
+
+          <Divider />
+
+          <TextFieldWithLabel
+            name="description"
+            control={control}
+            label="description"
+            rows={3}
+            icon={<DescriptionIcon fontSize="small" />}
+          />
+
+          <Divider />
+
+          <TextFieldWithLabel
+            name="prompt"
+            control={control}
+            label="prompt"
+            rows={3}
+            icon={<TipsAndUpdatesIcon fontSize="small" />}
+          />
 
           <Divider />
 
           <Stack direction="column" spacing={1}>
-            <Typography variant="h4">description*</Typography>
-            <Controller
-              name="description"
-              control={control}
-              render={({ field }) => (
-                <TextField
-                  multiline={true}
-                  rows={3}
-                  label="Description"
-                  variant="outlined"
-                  {...field}
-                />
-              )}
-            />
-          </Stack>
-
-          <Divider />
-
-          <Stack direction="column" spacing={1}>
-            <Typography variant="h4">prompt*</Typography>
-            <Controller
-              name="prompt"
-              control={control}
-              defaultValue=""
-              render={({ field }) => (
-                <TextField
-                  label="Prompt"
-                  variant="outlined"
-                  multiline={true}
-                  rows={3}
-                  {...field}
-                />
-              )}
-            />
-          </Stack>
-
-          <Divider />
-
-          <Stack direction="column" spacing={1}>
-            <Typography variant="h4">Ability</Typography>
-
             <AbilitySwitch
               header="Web Search Ability"
               description="a long long long long long long long long long longlong long long long longlong long long long longlong long long long longlong long long long longlong long long long long description to describe the ability"
               name="web_search"
               control={control}
+              icon={<LanguageIcon fontSize="small" />}
             />
 
             <AbilitySwitch
@@ -249,6 +270,7 @@ export function AgentInfoForm({
               description="a long long long long long long long long long longlong long long long longlong long long long longlong long long long longlong long long long longlong long long long long description to describe the ability"
               name="painting"
               control={control}
+              icon={<ColorLensIcon fontSize="small" />}
             />
 
             <AbilitySwitch
@@ -256,8 +278,19 @@ export function AgentInfoForm({
               description="a long long long long long long long long long longlong long long long longlong long long long longlong long long long longlong long long long longlong long long long long description to describe the ability"
               name="multi_model"
               control={control}
+              icon={<DoneAllIcon fontSize="small" />}
             />
           </Stack>
+
+          <Divider />
+
+          <AbilitySwitch
+            header="Shared with others"
+            description="a long long long long long long long long long longlong long long long longlong long long long longlong long long long longlong long long long longlong long long long long description to describe the ability"
+            name="is_shared"
+            control={control}
+            icon={<ShareIcon fontSize="small" />}
+          />
 
           <Divider />
 

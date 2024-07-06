@@ -62,7 +62,7 @@ export default function Page() {
   return (
     <Container>
       <Stack direction="column" spacing={2}>
-        <BigHeader header="latest chats" />
+        {/* <BigHeader header="latest chats" /> */}
         {chats.map((chat) => (
           <ChatCard key={chat.id} chat={chat} />
         ))}

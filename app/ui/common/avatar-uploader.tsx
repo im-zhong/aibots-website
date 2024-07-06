@@ -41,8 +41,19 @@ export function AvatarUploader() {
         onChange={handleChange}
         hidden
       />
-      <Avatar onClick={handleClick}>A</Avatar>
-      <Button onClick={handleClick}>upload avatar</Button>
+      <Avatar
+        sx={{
+          width: 100,
+          height: 100,
+          cursor: "pointer",
+        }}
+        onClick={handleClick}
+      >
+        A
+      </Avatar>
+      <Button variant="contained" onClick={handleClick}>
+        upload avatar
+      </Button>
     </Stack>
   );
 }
