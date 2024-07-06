@@ -5,8 +5,11 @@ import { create } from "domain";
 import { url } from "inspector";
 
 // 因为还是挺多地方使用到了
-const API_URL = "http://172.23.252.251:8000/api";
-const WS_URL = "http://172.23.252.251:8000/ws";
+// const API_URL = "http://172.23.252.251:8000/api";
+// const WS_URL = "http://172.23.252.251:8000/ws";
+
+const API_URL = "http://localhost:8000/api";
+const WS_URL = "http://localhost:8000/ws";
 export const api = {
   auth: {
     // 讲道理 每个API还有一个方法呢, 要不要带着呢？

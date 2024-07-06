@@ -2,11 +2,13 @@
 // zhangzhong
 
 "use client";
+
 import { useState, useEffect, useRef } from "react";
 import { Box, Paper, TextField, Typography, Button } from "@mui/material";
 import { assert } from "console";
 import { v4 as uuidv4 } from "uuid";
-import { Message, ChatBot, chatClient } from "@/app/lib/chat/chat_client";
+import { chatClient, ChatBot } from "@/app/lib/chat/chat_client";
+import { Message } from "@/app/lib/chat/types";
 import { ChatWindow } from "@/app/ui/chat/chat-window";
 import { InputWindow } from "@/app/ui/chat/input-window";
 
