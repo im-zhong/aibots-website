@@ -83,7 +83,7 @@ export function MessageCard({
               <Alert
                 onClose={handleClose}
                 severity="success"
-                variant="outlined"
+                variant="filled"
                 sx={{ width: "100%" }}
               >
                 copy content to clipboard

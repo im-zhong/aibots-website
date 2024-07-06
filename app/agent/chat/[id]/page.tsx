@@ -4,132 +4,47 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { Box, Paper, TextField, Typography, Button } from "@mui/material";
+import {
+  Box,
+  Paper,
+  TextField,
+  Typography,
+  Button,
+  Container,
+  Stack,
+} from "@mui/material";
 import { assert } from "console";
 import { v4 as uuidv4 } from "uuid";
 import { chatClient, ChatBot } from "@/app/lib/chat/chat_client";
 import { Message } from "@/app/lib/chat/types";
 import { ChatWindow } from "@/app/ui/chat/chat-window";
 import { InputWindow } from "@/app/ui/chat/input-window";
-
-// interface Message {
-//   sender: number;
-//   receiver: number;
-//   is_start_of_stream: boolean;
-//   is_end_of_stream: boolean;
-//   content: string;
-// }
-
-// class ChatBot {
-//   websocket: WebSocket;
-//   constructor() {
-//     this.websocket = new WebSocket("ws://localhost:8000/ws/chat");
-//     // this.websocket.onmessage = (event) => {
-//     //   const message = JSON.parse(event.data);
-//     //   console.log(message);
-//     //   // append message to last chat history
-//     // };
-//   }
-
-//   sendMessage(message: Message) {
-//     this.websocket.send(JSON.stringify(message));
-//   }
-// }
-
-// function MessageBox({ key, message }: { key: string; message: Message }) {
-//   // 可以用mui的typography组件
-//   return (
-//     <Paper>
-//       <Typography>{`${message.sender}: ${message.content}`}</Typography>
-//     </Paper>
-//   );
-// }
-
-// function ChatWindow({ chatHistory }: { chatHistory: Message[] }) {
-//   // 在render之间保存聊天历史，需要state
-//   // 先把静态页面写出来
-//   // 再写动态页面
-
-//   return (
-//     <>
-//       <Paper>
-//         <Box
-//           sx={{
-//             display: "flex",
-//             flexDirection: "column",
-//             justifyContent: "center",
-//             alignItems: "center",
-//             // height: "100vh",
-//             gap: 2,
-//           }}
-//         >
-//           {chatHistory.map((message) => (
-//             <MessageBox key={uuidv4()} message={message} />
-//           ))}
-//         </Box>
-//       </Paper>
-//     </>
-//   );
-// }
-
-// function InputWindow({
-//   chatHistory,
-//   setChathistory,
-//   chatBot,
-// }: {
-//   chatHistory: Message[];
-//   setChathistory: (chatHistory: Message[]) => void;
-//   chatBot: MutableRefObject<ChatBot | null>;
-// }) {
-//   const [inputValue, setInputValue] = useState<string>("");
-
-//   const handleButtonClick = () => {
-//     const newMessage: Message = {
-//       // id: chatHistory.length, // or generate a unique id
-//       // id: Date.now().toString(),
-//       content: inputValue,
-//       sender: 1,
-//       receiver: 2,
-//       is_start_of_stream: true,
-//       is_end_of_stream: true,
-
-//       // timestamp: new Date().toLocaleString(),
-//       // add other necessary fields
-//     };
-//     setChathistory([...chatHistory, newMessage]);
-//     setInputValue("");
-
-//     chatBot.current.sendMessage(newMessage);
-//   };
-
-//   return (
-//     <>
-//       <Box
-//         // component="form"
-//         sx={{
-//           display: "flex",
-//           flexDirection: "row",
-//           justifyContent: "center",
-//           alignItems: "center",
-//           gap: 2,
-//         }}
-//       >
-//         <TextField
-//           value={inputValue}
-//           onChange={(e) => setInputValue(e.target.value)}
-//         ></TextField>
-//         <Button onClick={handleButtonClick}>post</Button>
-//       </Box>
-//     </>
-//   );
-// }
+import { AgentCard } from "@/app/ui/agent/agent-card";
+import { User } from "@/app/lib/auth/auth_client";
+import { Agent } from "@/app/lib/agent/agent-client";
 
 export default function Page({ params }: { params: { id: string } }) {
   // 在第一次渲染组件时建立websocket连接
   // 感觉我们需要写一个类来封装websocket连接
 
+  const user = {
+    id: "1",
+    name: "Alice",
+    email: "email",
+    avatar: "avatar",
+  } satisfies User;
+
+  const agent = {
+    id: "1",
+    name: "Alice",
+    description: "description",
+  } satisfies Agent;
+
   // no chatbot should be a ref!!!
   const chatBot = useRef<ChatBot | null>(null);
+
+  // TODO: 这个页面明显可以加上skeleton
+  // 只要是需要加载的页面都可以这样搞
 
   // use ref instead of state, because websocket change should not trigger re-render
   // only the change of message should trigger re-render
@@ -145,44 +60,7 @@ export default function Page({ params }: { params: { id: string } }) {
   // 一个是/chat/open 不对 这个不用 我们的/ws/chat接口是支持打开旧的对话的
   // 而且这个页面需要添加一个参数，就是history
   // 或者在页面一开始的时候 通过一个api拿到聊天历史也行
-  const [chatHistory, setChathistory] = useState<Message[]>([
-    // {
-    //   // id: "1",
-    //   content: "你好",
-    //   sender: 2,
-    //   receiver: 1,
-    //   is_start_of_stream: true,
-    //   is_end_of_stream: true,
-    //   // timestamp: "2024-5-22 10:00",
-    // },
-    // {
-    //   // id: "2",
-    //   content: "你好",
-    //   sender: 1,
-    //   receiver: 2,
-    //   is_start_of_stream: true,
-    //   is_end_of_stream: true,
-    //   // timestamp: "2024-5-22 10:01",
-    // },
-    // {
-    //   // id: "3",
-    //   content: "你好",
-    //   sender: 2,
-    //   receiver: 1,
-    //   is_start_of_stream: true,
-    //   is_end_of_stream: true,
-    //   // timestamp: "2024-5-22 10:02",
-    // },
-    // {
-    //   // id: "4",
-    //   content: "你好",
-    //   sender: 1,
-    //   receiver: 2,
-    //   is_start_of_stream: true,
-    //   is_end_of_stream: true,
-    //   // timestamp: "2024-5-22 10:03",
-    // },
-  ]);
+  const [chatHistory, setChathistory] = useState<Message[]>([]);
 
   useEffect(() => {
     // console.log("run use effect");
@@ -266,25 +144,19 @@ export default function Page({ params }: { params: { id: string } }) {
 
   return (
     <>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-          gap: 2,
-        }}
-      >
-        <ChatWindow chatHistory={chatHistory} />
-        <InputWindow
-          chatHistory={chatHistory}
-          setChathistory={setChathistory}
-          // 不对，我想起来了，effect是在整个组件渲染完之后才会执行的
-          // 所以这里要传递整个ref才行
-          chatBot={chatBot}
-        />
-      </Box>
+      <Container>
+        <Stack direction="column" alignItems="center" spacing={2}>
+          <AgentCard agent={agent}></AgentCard>
+          <ChatWindow chatHistory={chatHistory} user={user} agent={agent} />
+          <InputWindow
+            chatHistory={chatHistory}
+            setChathistory={setChathistory}
+            // 不对，我想起来了，effect是在整个组件渲染完之后才会执行的
+            // 所以这里要传递整个ref才行
+            chatBot={chatBot}
+          />
+        </Stack>
+      </Container>
     </>
   );
 }

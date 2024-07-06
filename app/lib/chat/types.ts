@@ -2,10 +2,11 @@
 // zhangzhong
 
 export interface Message {
-  // TODO, 应该是string
-  // 这个message的类型肯定是不对啊
+  // TODO, 1.应该是string
+  // 2.这个message的类型肯定是不对啊
   // 我们应该返回
   // message为什么没有created_at呢？
+  // 3. 每个message都必须有一个唯一的id呀！！
   sender: number;
   receiver: number;
   is_start_of_stream: boolean;
