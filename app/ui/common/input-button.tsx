@@ -4,8 +4,9 @@
 "use client";
 
 import * as React from "react";
-import { Button, TextField, Stack, ButtonGroup } from "@mui/material";
+import { Button, TextField, Stack, ButtonGroup, alpha } from "@mui/material";
 import { Controller, useForm, FieldValues, Path } from "react-hook-form";
+import theme from "@/app/ui/theme";
 
 interface InputButtonProps {
   placeholder: string;
@@ -76,6 +77,12 @@ export function InputButton({
         value={inputValue}
         label={label}
         variant="outlined"
+        sx={{
+          "& .MuiInputBase-input": {
+            backgroundColor: theme.palette.common.white,
+            borderRadius: 1,
+          },
+        }}
       />
 
       <Button

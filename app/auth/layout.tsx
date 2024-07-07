@@ -3,7 +3,7 @@
 import * as React from "react";
 import { useRouter } from "next/router";
 import GuestGuard from "@/app/ui/auth/guest-guard";
-import { LogoHeader } from "@/app/ui/logo-header";
+import { LogoHeader } from "@/app/ui/common/logo-header";
 import { Stack } from "@mui/material";
 
 // 所谓layout，不就是规定整个页面的布局吗

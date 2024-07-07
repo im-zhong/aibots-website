@@ -1,25 +1,36 @@
 // 2024/6/29
 // zhangzhong
 
-import { Typography, Box, Stack, TextField, Button } from "@mui/material";
+import {
+  Typography,
+  Box,
+  Stack,
+  TextField,
+  Button,
+  Container,
+} from "@mui/material";
+import { InputButton } from "@/app/ui/common/input-button";
+import theme from "@/app/ui/theme";
 
 export function Prompt() {
   return (
-    <>
-      <Stack
-        direction="column"
-        justifyContent="center"
-        spacing={9}
-        height={"60vh"}
-      >
-        <Stack direction="row" justifyContent="center" spacing={5}>
-          <TextField variant="outlined" label="prompt"></TextField>
-          <Button variant="contained" color="primary">
-            generate
-          </Button>
-        </Stack>
+    <Container
+      sx={{
+        width: "90%",
+      }}
+    >
+      <Stack direction="column" spacing={2}>
+        <InputButton
+          label=""
+          placeholder="prompt to gen background"
+          button="gen"
+          onSubmit={async (data: string) => {
+            console.log(data);
+          }}
+        />
+
         <Typography
-          variant="caption"
+          variant="body2"
           sx={{
             color: "white",
           }}
@@ -29,12 +40,9 @@ export function Prompt() {
           defying gravity. The pair is surrounded by the expanse of outer space,
           complete with distant stars and celestial bodies. The horse, chestnut
           brown in colour, appears equally prepared for space travel, with
-          futuristic devices attached to it. Shadowy asteroids float past, and a
-          colorful nebula blooms in the far distance, contrasting against the
-          stark blackness of space. The astronaut holds onto the reins,
-          determination evident even through the reflective visor of his helmet.
+          futuristic devices attached to it.
         </Typography>
       </Stack>
-    </>
+    </Container>
   );
 }

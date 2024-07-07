@@ -9,7 +9,11 @@ import Image from "next/image";
 
 import theme from "@/app/ui/theme";
 
-export function Logo() {
+export function Logo({
+  color = theme.palette.common.black,
+}: {
+  color: string;
+}) {
   return (
     <Stack
       direction="row"
@@ -24,11 +28,7 @@ export function Logo() {
     >
       <Image src={logoImage} alt="" width={50} height={50} />
 
-      <Typography
-        color={theme.palette.common.black}
-        variant="h4"
-        fontWeight="bold"
-      >
+      <Typography color={color} variant="h4" fontWeight="bold">
         AGENT
       </Typography>
     </Stack>

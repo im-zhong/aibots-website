@@ -1,10 +1,18 @@
 "use client";
 
 import * as React from "react";
-import { Container, Box, Typography, Divider, Stack } from "@mui/material";
-import { LogoHeader } from "@/app/ui/logo-header";
+import {
+  Container,
+  Box,
+  Typography,
+  Divider,
+  Stack,
+  Paper,
+} from "@mui/material";
+import { LogoHeader } from "@/app/ui/common/logo-header";
 import { Starter } from "@/app/ui/home/starter";
 import { Prompt } from "@/app/ui/home/prompt";
+import theme from "@/app/ui/theme";
 
 export default function Page() {
   // 主页这里直接一个redirect
@@ -15,40 +23,83 @@ export default function Page() {
 
   return (
     <>
-      <Box
+      <Stack
+        direction="column"
         sx={{
           width: "100%", // Set the width
           height: "100vh", // Set the height
-          backgroundImage: "url('/background.png')", // Set the background image URL
+          backgroundColor: "rgba(0, 0, 0, 0.9)", // Set the background color
+          // backgroundImage: "url('/background.png')", // Set the background image URL
           backgroundSize: "cover", // Cover the entire Box area
           backgroundPosition: "center", // Center the background image
           backgroundRepeat: "no-repeat", // Do not repeat the image
         }}
       >
         {/* Your content here */}
-        <LogoHeader />
-        <Container>
-          <Typography
-            sx={{
-              color: "white",
-            }}
-            variant="h1"
+        <LogoHeader color={theme.palette.common.white} />
+
+        <Container
+          sx={{
+            height: "100%",
+          }}
+        >
+          <Stack
+            direction="column"
+            height="100%"
+            sx={
+              {
+                // border: "1px solid green",
+              }
+            }
           >
-            Let’s missing the new world of Agent!
-          </Typography>
-          <Divider />
-          <Container>
-            <Stack direction="row" spacing={2}>
-              <Container>
-                <Starter />
-              </Container>
-              <Container>
-                <Prompt />
-              </Container>
+            <Typography
+              sx={{
+                color: theme.palette.common.white,
+                textAlign: "center",
+              }}
+              fontWeight="bold"
+              variant="h1"
+            >
+              Let’s missing the new world of Agent!
+            </Typography>
+
+            <Divider
+              flexItem
+              sx={{
+                borderColor: theme.palette.common.white,
+                borderWidth: 1,
+                marginTop: 1,
+              }}
+              variant="middle"
+            />
+
+            <Stack
+              sx={{
+                flex: 1,
+                // border: "1px solid blue",
+              }}
+            >
+              <Stack
+                direction="row"
+                spacing={0}
+                sx={
+                  {
+                    // border: "1px solid red",
+                  }
+                }
+                height="100%"
+              >
+                <Stack alignItems="center" justifyContent="center" width="50%">
+                  <Prompt />
+                </Stack>
+                <Stack alignItems="center" justifyContent="center" width="50%">
+                  <Starter />
+                </Stack>
+              </Stack>
             </Stack>
-          </Container>
+          </Stack>
         </Container>
-      </Box>
+      </Stack>
     </>
   );
 }
