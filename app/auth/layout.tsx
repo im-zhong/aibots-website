@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import GuestGuard from "@/app/ui/auth/guest-guard";
 import { LogoHeader } from "@/app/ui/common/logo-header";
 import { Stack } from "@mui/material";
+import theme from "@/app/ui/theme";
 
 // 所谓layout，不就是规定整个页面的布局吗
 // 那么我们这里应该提供的就是一个整体的布局
@@ -30,7 +31,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           }
         }
       >
-        <LogoHeader></LogoHeader>
+        <LogoHeader color={theme.palette.common.black}></LogoHeader>
         <Stack
           alignItems="center"
           justifyContent="center"

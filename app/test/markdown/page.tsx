@@ -1,3 +1,4 @@
+/* eslint-disable react/no-children-prop */
 // 2024/7/6
 // zhangzhong
 
@@ -55,7 +56,7 @@ const CodeBlock = ({ language, value }) => {
 
 // 那么我现在又一个问题
 // 就是把他们合到一起会发生什么？
-export function TestPage() {
+function TestPage() {
   return (
     <>
       <Markdown remarkPlugins={[remarkGfm]}>{markdown}</Markdown>
@@ -63,7 +64,7 @@ export function TestPage() {
         children={code_markdown}
         components={{
           code(props) {
-            const { children, className, node, ...rest } = props;
+            const { children, className, node, ref, ...rest } = props;
             const match = /language-(\w+)/.exec(className || "");
             return match ? (
               <SyntaxHighlighter
@@ -119,7 +120,7 @@ export default function Page() {
       children={all_markdown}
       components={{
         code(props) {
-          const { children, className, node, ...rest } = props;
+          const { children, className, node, ref, ...rest } = props;
           const match = /language-(\w+)/.exec(className || "");
           return match ? (
             <SyntaxHighlighter
