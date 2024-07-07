@@ -37,7 +37,7 @@ function Topics({ topic, agents }: { topic: string; agents: Agent[] }) {
           sx={{
             // margin: "1 auto",
             width: "100%",
-            border: "1px solid red",
+            // border: "1px solid red",
           }}
         >
           {agents.map((agent) => (

@@ -1,7 +1,14 @@
 "use client";
 
 import * as React from "react";
-import { Button, TextField, Box, Typography, Divider } from "@mui/material";
+import {
+  Button,
+  TextField,
+  Box,
+  Typography,
+  Divider,
+  Container,
+} from "@mui/material";
 import { Controller, useForm, UseFormHandleSubmit } from "react-hook-form";
 import { Link } from "@mui/material";
 import { useRouter } from "next/navigation";
@@ -23,8 +30,8 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import { Topic, KnowledgePoint } from "@/app/lib/agent/types";
 
-import { FilePanel } from "./file-panel";
-import { URLPanel } from "./url-panel";
+import { FilePanel } from "@/app/ui/agent/create/file-panel";
+import { URLPanel } from "@/app/ui/agent/create/url-panel";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -40,45 +47,56 @@ const Item = styled(Paper)(({ theme }) => ({
 // 那么本质上他不需要state
 // 因为这个state不是在这个层面发生变化，他只是会根据这些东西渲染不同的页面
 // 所以应该作为prop传入
-export function KnowledgePanel({ topic }: { topic: Topic }) {
+export default function Page() {
   // 然后在这里面我们还可以上传文件 和 url
   //
 
-  return (
-    <Accordion>
-      <AccordionSummary
-        expandIcon={<ArrowDropDownIcon />}
-        aria-controls={`${topic.knowledgeId}-content`}
-        id={`${topic.knowledgeId}-header`}
-      >
-        <Typography>{topic.topic}</Typography>
-      </AccordionSummary>
-      <Divider />
-      <AccordionDetails>
-        <Stack
-          direction="row"
-          spacing={1}
-          width="100%"
-          sx={
-            {
-              // border: "1px solid red",
-            }
-          }
-        >
-          <Box width="50%">
-            <FilePanel knowledgeId={topic.knowledgeId} />
-          </Box>
+  const topic = {
+    knowledgeId: "1",
+    topic: "topic",
+  } as Topic;
 
-          <Divider
-            orientation="vertical"
-            flexItem
-            sx={{ borderColor: "primary.main" }}
-          />
-          <Box width="50%">
-            <URLPanel knowledgeId={topic.knowledgeId} />
-          </Box>
-        </Stack>
-      </AccordionDetails>
-    </Accordion>
+  return (
+    <Container
+      sx={{
+        width: "500px",
+      }}
+    >
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ArrowDropDownIcon />}
+          aria-controls={`${topic.knowledgeId}-content`}
+          id={`${topic.knowledgeId}-header`}
+        >
+          <Typography>{topic.topic}</Typography>
+        </AccordionSummary>
+        <Divider />
+        <AccordionDetails>
+          <Stack
+            direction="row"
+            spacing={2}
+            width="100%"
+            sx={
+              {
+                // border: "1px solid red",
+              }
+            }
+          >
+            <Box width="50%">
+              <FilePanel knowledgeId={topic.knowledgeId} />
+            </Box>
+
+            <Divider
+              orientation="vertical"
+              flexItem
+              sx={{ borderColor: "primary.main" }}
+            />
+            <Box width="50%">
+              <URLPanel knowledgeId={topic.knowledgeId} />
+            </Box>
+          </Stack>
+        </AccordionDetails>
+      </Accordion>
+    </Container>
   );
 }

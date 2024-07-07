@@ -24,18 +24,22 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <GuestGuard>
       <Stack
         height="100vh"
-        sx={{
-          border: "1px solid black",
-        }}
+        sx={
+          {
+            // border: "1px solid black",
+          }
+        }
       >
         <LogoHeader></LogoHeader>
         <Stack
           alignItems="center"
           justifyContent="center"
           height="100%"
-          sx={{
-            border: "1px solid blue",
-          }}
+          sx={
+            {
+              // border: "1px solid blue",
+            }
+          }
         >
           {children}
         </Stack>

@@ -28,7 +28,7 @@ export function KnowledgePointsShower({
 }) {
   return (
     <Box sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
-      <List>
+      <List disablePadding>
         {knowledgePoints.map((knowledgePoint) => (
           <ListItem
             key={knowledgePoint.id}
@@ -38,16 +38,32 @@ export function KnowledgePointsShower({
                 <DeleteIcon />
               </IconButton>
             }
+            sx={{
+              paddingTop: "0px", // Reduce top padding
+              paddingBottom: "0px", // Reduce bottom padding
+              "& .MuiListItemIcon-root": {
+                minWidth: "32px", // Reduce the width if necessary
+              },
+              "& .MuiListItemText-root": {
+                margin: "0px", // Adjust text margin if necessary
+              },
+            }}
           >
             <ListItemButton>
               <ListItemIcon>
                 {knowledgePoint.type === "file" ? (
-                  <InsertDriveFileOutlinedIcon />
+                  <InsertDriveFileOutlinedIcon fontSize="small" />
                 ) : (
-                  <LanguageOutlinedIcon />
+                  <LanguageOutlinedIcon fontSize="small" />
                 )}
               </ListItemIcon>
-              <ListItemText primary={knowledgePoint.path} secondary="" />
+              <ListItemText
+                primary={
+                  knowledgePoint.path.slice(0, 10) +
+                  (knowledgePoint.path.length > 10 ? " ..." : "")
+                }
+                secondary="secondary"
+              />
             </ListItemButton>
           </ListItem>
         ))}

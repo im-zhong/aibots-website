@@ -67,8 +67,9 @@ export function InputButton({
   };
 
   return (
-    <ButtonGroup>
+    <ButtonGroup fullWidth>
       <TextField
+        fullWidth
         placeholder={placeholder}
         onChange={onChange} // Update inputValue on change
         onKeyDown={onKeyDown} // Handle enter key press
@@ -77,7 +78,14 @@ export function InputButton({
         variant="outlined"
       />
 
-      <Button variant="contained" type="submit" onClick={onClick}>
+      <Button
+        sx={{
+          maxWidth: "70px",
+        }}
+        variant="contained"
+        type="submit"
+        onClick={onClick}
+      >
         {button}
       </Button>
     </ButtonGroup>

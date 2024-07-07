@@ -2,18 +2,33 @@
 // zhangzhong
 
 import * as React from "react";
-import { Stack } from "@mui/material";
+import { Stack, Divider, Box } from "@mui/material";
 import { KnowledgePoint } from "@/app/lib/agent/types";
 import { URLUploader } from "./url-uploader";
 import { KnowledgePointsShower } from "./knowledge-points-shower";
+import { UploadPanel } from "./upload-panel";
 
 export function URLPanel({ knowledgeId }: { knowledgeId: string }) {
   const [urls, setURLs] = React.useState<KnowledgePoint[]>([]);
 
   return (
-    <Stack direction="column" spacing={2}>
+    <UploadPanel knowledgePoints={urls}>
       <URLUploader knowledgeId={knowledgeId} setKnowledgePoints={setURLs} />
-      <KnowledgePointsShower knowledgePoints={urls} />
-    </Stack>
+    </UploadPanel>
   );
+  // return (
+  //   <Stack direction="column" spacing={2}>
+  //     <Box
+  //       height="80px"
+  //       sx={{
+  //         border: "1px solid black",
+  //       }}
+  //     >
+  //       <URLUploader knowledgeId={knowledgeId} setKnowledgePoints={setURLs} />
+  //     </Box>
+
+  //     <Divider />
+  //     <KnowledgePointsShower knowledgePoints={urls} />
+  //   </Stack>
+  // );
 }

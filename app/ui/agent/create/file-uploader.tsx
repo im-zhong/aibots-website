@@ -63,12 +63,13 @@ export function FileUploader({
         alignItems: "center",
         gap: 2,
         border: "1px dashed #ccc",
+        height: "40",
       }}
     >
       <section className="container">
         <div {...getRootProps({ className: "dropzone" })}>
           <input {...getInputProps()} />
-          <p>Drag and drop some files here, or click to select files</p>
+          <p>files</p>
         </div>
       </section>
     </Box>
