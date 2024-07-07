@@ -6,6 +6,7 @@ import { Controller, useForm } from "react-hook-form";
 
 import { knowledgeClient } from "@/app/lib/agent/knowledge-client";
 import { KnowledgePoint } from "@/app/lib/agent/types";
+import { InputButton } from "@/app/ui/common/input-button";
 
 export function URLUploader({
   knowledgeId,
@@ -14,9 +15,8 @@ export function URLUploader({
   knowledgeId: string;
   setKnowledgePoints: React.Dispatch<React.SetStateAction<KnowledgePoint[]>>;
 }) {
-  const { handleSubmit, control } = useForm<{ url: string }>();
-
-  const onSubmit = async ({ url }: { url: string }) => {
+  const onSubmit = async (data: string) => {
+    const url = data;
     console.log(url);
     // const { agent, error } = await agentClient.createAgent({ ...data });
     const { id, error } = await knowledgeClient.uploadURL({
@@ -34,42 +34,11 @@ export function URLUploader({
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <ButtonGroup variant="contained" aria-label="Basic button group">
-        <Controller
-          name="url"
-          control={control}
-          render={({ field }) => <TextField label="url" {...field} />}
-        />
-
-        <Button variant="contained" type="submit">
-          upload
-        </Button>
-      </ButtonGroup>
-    </form>
-  );
-}
-
-export function URLUploaderV2() {
-  const { handleSubmit, control } = useForm<{ url: string }>();
-
-  const onSubmit = ({ url }: { url: string }) => alert("hello");
-
-  return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <ButtonGroup variant="contained" aria-label="Basic button group">
-        <Controller
-          name="url"
-          control={control}
-          render={({ field }) => (
-            <TextField label="url" variant="outlined" {...field} />
-          )}
-        />
-
-        <Button variant="contained" type="submit">
-          Submit
-        </Button>
-      </ButtonGroup>
-    </form>
+    <InputButton
+      placeholder="url"
+      label="url"
+      button="upload"
+      onSubmit={onSubmit}
+    ></InputButton>
   );
 }

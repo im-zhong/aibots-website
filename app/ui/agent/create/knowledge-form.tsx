@@ -6,6 +6,7 @@ import { Stack, Typography, Divider } from "@mui/material";
 import { Topic } from "@/app/lib/agent/types";
 import { AddTopicForm } from "./add-topic-form";
 import { KnowledgesAccordion } from "./knowledges-accordion";
+import theme from "@/app/ui/theme";
 
 // 像这样把setState函数传进来也挺常见的
 // 而且说实话也挺合理的
@@ -21,9 +22,11 @@ export function KnowledgeForm({
 }) {
   return (
     <Stack direction="column" alignItems="center" spacing={2}>
-      <Typography variant="h3">Knowledges</Typography>
+      <Typography variant="h4" fontWeight="bold">
+        Knowledges
+      </Typography>
 
-      <Typography variant="body2">
+      <Typography variant="body2" color={theme.palette.grey[500]}>
         Add knowledges for your agent. It could be a file or a website url. When
         you ask questions about such topics, knowledge will be used.
       </Typography>

@@ -191,7 +191,9 @@ export function AgentInfoForm({
 
   return (
     <Stack direction="column" alignItems="center" spacing={2}>
-      <Typography variant="h3">Agent Infomation</Typography>
+      <Typography variant="h4" fontWeight="bold">
+        Agent
+      </Typography>
 
       <Typography variant="body2" color={theme.palette.grey[500]}>
         Add knowledges for your agent. It could be a file or a website url. When

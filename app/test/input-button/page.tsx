@@ -3,29 +3,20 @@
 
 "use client";
 
-import { Controller, useForm } from "react-hook-form";
-import { Button, ButtonGroup, TextField } from "@mui/material";
+import { InputButton } from "@/app/ui/common/input-button";
 
 export default function Page() {
-  const { handleSubmit, control } = useForm<{ url: string }>();
-
-  const onSubmit = ({ url }: { url: string }) => alert("hello");
+  const onSubmit = async (data: string) => {
+    console.log(data);
+  };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <ButtonGroup variant="contained" aria-label="Basic button group">
-        <Controller
-          name="url"
-          control={control}
-          render={({ field }) => (
-            <TextField label="url" variant="outlined" {...field} />
-          )}
-        />
-
-        <Button variant="contained" type="submit">
-          Submit
-        </Button>
-      </ButtonGroup>
-    </form>
+    <InputButton
+      name="topic"
+      placeholder="new topic to add"
+      label="Topic"
+      button="ADD"
+      onSubmit={onSubmit}
+    ></InputButton>
   );
 }
